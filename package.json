@@ -1,12 +1,7 @@
 {
   "name": "vite-electron-builder",
-  "description": "Secure boilerplate for Electron app based on Vite",
-  "private": true,
-  "author": {
-    "email": "kozackunisoft@gmail.com",
-    "name": "Alex Kozack",
-    "url": "https://kozack.me"
-  },
+  "description": "Community Mod gallery for Hero's Hour",
+  "private": false,
   "main": "packages/main/dist/index.cjs",
   "scripts": {
     "build": "npm run build:main && npm run build:preload && npm run build:renderer",
@@ -29,26 +24,34 @@
     "format": "npx prettier --write \"**/*.{js,mjs,cjs,ts,mts,cts,vue,json}\""
   },
   "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@types/source-list-map": "^0.1.2",
     "@typescript-eslint/eslint-plugin": "5.38.1",
-    "@vitejs/plugin-vue": "3.1.2",
+    "@vitejs/plugin-react": "^2.1.0",
     "@vue/test-utils": "2.1.0",
     "cross-env": "7.0.3",
     "electron": "21.0.1",
     "electron-builder": "23.3.3",
     "eslint": "8.24.0",
-    "eslint-plugin-vue": "9.5.1",
     "happy-dom": "6.0.4",
-    "nano-staged": "0.8.0",
     "playwright": "1.26.1",
     "simple-git-hooks": "2.8.0",
     "typescript": "4.8.4",
     "unplugin-auto-expose": "0.0.3",
     "vite": "3.1.4",
-    "vitest": "0.23.4",
-    "vue-tsc": "0.40.13"
+    "vitest": "0.23.4"
   },
   "dependencies": {
+    "@anatoliygatt/use-prefers-color-scheme": "^1.0.5",
+    "@emotion/react": "^11.10.4",
+    "@mantine/core": "^5.4.0",
+    "@mantine/form": "^5.4.0",
+    "@mantine/hooks": "^5.4.0",
+    "@mantine/modals": "^5.4.0",
+    "@mantine/notifications": "^5.4.0",
     "electron-updater": "5.2.1",
-    "vue": "3.2.40"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
