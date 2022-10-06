@@ -14,9 +14,9 @@ interface ImportMetaEnv {
    * URL where `renderer` web page is running.
    * This variable is initialized in scripts/watch.ts
    */
-  readonly VITE_DEV_SERVER_URL: undefined | string;
+  readonly VITE_DEV_SERVER_URL: undefined | string
 }
 
 interface ImportMeta {
-  readonly env: ImportMetaEnv;
+  readonly env: ImportMetaEnv
 }
