@@ -30,6 +30,22 @@ async function createWindow() {
     }
   })
 
+  browserWindow.webContents.userAgent =
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko'
+
+  browserWindow.webContents.session.webRequest.onBeforeSendHeaders((details, callback) => {
+    callback({requestHeaders: {Origin: '*', ...details.requestHeaders}})
+  })
+
+  browserWindow.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        'Access-Control-Allow-Origin': ['*'],
+        ...details.responseHeaders,
+      },
+    })
+  })
+
   /**
    * URL for main window.
    * Vite dev server for development.

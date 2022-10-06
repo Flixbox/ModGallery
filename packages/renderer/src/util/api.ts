@@ -19,8 +19,6 @@ export const fetchModDataSteam = async (mods: Mod[]) => {
       )
         .replaceAll('[', '%5B')
         .replaceAll(']', '%5D'),
-
-      mode: 'no-cors',
     },
   )
 }
