@@ -80,7 +80,7 @@ jobs:
           node-version: 16 # Need for npm >=7.7
           cache: 'npm'
 
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
 
