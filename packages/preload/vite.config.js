@@ -1,7 +1,7 @@
-import {chrome} from '../../.electron-vendors.cache.json';
-import {preload} from 'unplugin-auto-expose';
+import {chrome} from '../../.electron-vendors.cache.json'
+import {preload} from 'unplugin-auto-expose'
 
-const PACKAGE_ROOT = __dirname;
+const PACKAGE_ROOT = __dirname
 
 /**
  * @type {import('vite').UserConfig}
@@ -31,6 +31,6 @@ const config = {
     reportCompressedSize: false,
   },
   plugins: [preload.vite()],
-};
+}
 
-export default config;
+export default config

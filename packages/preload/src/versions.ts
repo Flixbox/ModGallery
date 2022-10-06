@@ -1,1 +1,1 @@
-export const versions = process.versions;
+export const versions = process.versions
