@@ -2,17 +2,26 @@ import {MantineProvider, Container, Box, SimpleGrid, Text, TextInput} from '@man
 import {NotificationsProvider, showNotification} from '@mantine/notifications'
 import {usePrefersColorScheme} from '@anatoliygatt/use-prefers-color-scheme'
 import {useEffect, useState} from 'react'
-import ModTile from './ModTile'
-import modData from '../modData'
+import unpopulatedModData from '../modData'
 import {fetchModDataSteam} from '../util/api'
+import {PopulatedMod} from 'types'
+import ModList from './ModList'
 
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()
+  const [populatedMods, setPopulatedMods] = useState<PopulatedMod[]>([])
   useEffect(() => {
     ;(async () => {
-      const steamModData = await fetchModDataSteam(modData.mods)
+      const steamModData = await fetchModDataSteam(unpopulatedModData.mods)
       // setCars(cars)
-      console.log(steamModData)
+      console.log('steamModData', steamModData)
+      setPopulatedMods(
+        unpopulatedModData.mods.map(unpopulatedMod => ({
+          ...unpopulatedMod,
+          ...(steamModData.find(mod => unpopulatedMod.publishedfileid === mod.publishedfileid) ??
+            ({} as PopulatedMod)),
+        })),
+      )
     })()
   }, [])
 
@@ -29,7 +38,7 @@ const App = () => {
         <Container>
           <SimpleGrid cols={1}>
             <Text>Yeeteroni</Text>
-            <ModTile id={1} />
+            <ModList mods={populatedMods} />
           </SimpleGrid>
         </Container>
       </NotificationsProvider>

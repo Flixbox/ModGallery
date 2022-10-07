@@ -1,9 +1,9 @@
-import {Mod} from 'types'
+import {PopulatedMod, UnpopulatedMod} from 'types'
 import {stringify} from 'query-string'
 
-export const fetchModDataSteam = async (mods: Mod[]) => {
-  const modIds = mods.map(mod => mod.workshopId)
-  return await fetch(
+export const fetchModDataSteam = async (mods: UnpopulatedMod[]) => {
+  const publishedfileids = mods.map(mod => mod.publishedfileid)
+  const res = await fetch(
     'https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/',
     {
       method: 'POST',
@@ -12,13 +12,14 @@ export const fetchModDataSteam = async (mods: Mod[]) => {
       },
       body: stringify(
         {
-          itemcount: modIds.length.toString(),
-          publishedfileids: modIds,
+          itemcount: publishedfileids.length.toString(),
+          publishedfileids,
         },
         {arrayFormat: 'index'},
       )
         .replaceAll('[', '%5B')
         .replaceAll(']', '%5D'),
     },
-  )
+  ).then(res => res.json())
+  return res.response.publishedfiledetails as PopulatedMod[]
 }
