@@ -2,6 +2,8 @@ import {app, BrowserWindow, dialog, ipcMain} from 'electron'
 import {join} from 'path'
 import {URL} from 'url'
 import {homedir} from 'os'
+import settings from 'electron-settings'
+import {pathExists} from 'fs-extra'
 
 async function createWindow() {
   const browserWindow = new BrowserWindow({
@@ -48,14 +50,20 @@ async function createWindow() {
   })
 
   ipcMain.handle('settings:pickModFolder', async () => {
+    let defaultPath = homedir()
+    if (process.platform === 'win32')
+      defaultPath = `${defaultPath}\\AppData\\Local\\Hero_s_Hour\\mods`
+    console.log(defaultPath)
+    if (!pathExists(defaultPath)) defaultPath = homedir()
     const {canceled, filePaths} = await dialog.showOpenDialog(browserWindow, {
       properties: ['openDirectory', 'showHiddenFiles'],
-      defaultPath: homedir(),
+      defaultPath,
     })
     if (canceled) {
       return
     } else {
       console.log(filePaths[0])
+      settings.setSync('modFolder', filePaths[0])
       return filePaths[0]
     }
   })
