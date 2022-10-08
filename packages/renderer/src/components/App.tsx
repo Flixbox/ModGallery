@@ -9,6 +9,7 @@ import ModList from './ModList'
 import Navbar from './Navbar'
 import Header from './Header'
 import SettingsTile from './SettingsTile'
+import {pullMods} from '#preload'
 
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()
@@ -16,6 +17,8 @@ const App = () => {
   const [populatedMods, setPopulatedMods] = useState<PopulatedMod[]>([])
   useEffect(() => {
     ;(async () => {
+      await pullMods()
+
       const steamModData = await fetchModDataSteam(unpopulatedModData.mods)
       // setCars(cars)
       console.log('steamModData', steamModData)

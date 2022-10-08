@@ -6,3 +6,4 @@ export const pickModFolder = (defaultPath?: string) =>
 export const getSettings = async () => await ipcRenderer.invoke('settings:get')
 export const setSettings = async ({key, value}: SettingsOperation) =>
   await ipcRenderer.invoke('settings:set', {key, value})
+export const pullMods = async () => await ipcRenderer.invoke('mods:pull')

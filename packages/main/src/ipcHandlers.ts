@@ -38,6 +38,10 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
   ipcMain.handle('settings:set', (e, {key, value}: SettingsOperation) => {
     settings.setSync(key, value)
   })
+
+  ipcMain.handle('mods:pull', () => {
+    console.log("Pulling mods!")
+  })
 }
 
 export default ipcHandlers
