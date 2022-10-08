@@ -40,7 +40,7 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
   })
 
   ipcMain.handle('mods:pull', () => {
-    console.log("Pulling mods!")
+    console.log('Pulling mods!')
   })
 }
 
