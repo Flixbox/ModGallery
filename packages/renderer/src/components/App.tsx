@@ -38,26 +38,15 @@ const App = () => {
       }}
     >
       <NotificationsProvider>
-        <AppShell
-          padding="md"
-          header={
-            <Header
-              opened={opened}
-              setOpened={setOpened}
-            />
-          }
-          navbar={<Navbar opened={opened} />}
-        >
-          <>
-            <Box m="md" />
-            <Container>
-              <SimpleGrid cols={1}>
-                <SettingsTile />
-                <ModList mods={populatedMods} />
-              </SimpleGrid>
-            </Container>
-          </>
-        </AppShell>
+        <>
+          <Box m="md" />
+          <Container>
+            <SimpleGrid cols={1}>
+              <SettingsTile />
+              <ModList mods={populatedMods} />
+            </SimpleGrid>
+          </Container>
+        </>
       </NotificationsProvider>
     </MantineProvider>
   )
