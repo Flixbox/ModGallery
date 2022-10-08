@@ -4,4 +4,4 @@
 
 export {sha256sum} from './nodeCrypto'
 export {versions} from './versions'
-import "./fileOperations"
+import './fileOperations'
