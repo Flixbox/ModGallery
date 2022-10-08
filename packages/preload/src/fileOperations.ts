@@ -1,9 +1,10 @@
-import {contextBridge} from 'electron'
+import {BrowserWindow, contextBridge, ipcRenderer} from 'electron'
 import {outputFileSync} from 'fs-extra'
 import {homedir} from 'os'
+import settings from 'electron-settings'
 
 contextBridge.exposeInMainWorld('electron', {
-  yeet: async () => outputFileSync('yeet.txt', homedir()),
+  pickModFolder: () => ipcRenderer.invoke('settings:pickModFolder'),
 })
 
 export {}

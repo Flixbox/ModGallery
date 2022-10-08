@@ -1,6 +1,7 @@
-import {app, BrowserWindow} from 'electron'
+import {app, BrowserWindow, dialog, ipcMain} from 'electron'
 import {join} from 'path'
 import {URL} from 'url'
+import {homedir} from 'os'
 
 async function createWindow() {
   const browserWindow = new BrowserWindow({
@@ -44,6 +45,19 @@ async function createWindow() {
         ...details.responseHeaders,
       },
     })
+  })
+
+  ipcMain.handle('settings:pickModFolder', async () => {
+    const {canceled, filePaths} = await dialog.showOpenDialog(browserWindow, {
+      properties: ['openDirectory', 'showHiddenFiles'],
+      defaultPath: homedir(),
+    })
+    if (canceled) {
+      return
+    } else {
+      console.log(filePaths[0])
+      return filePaths[0]
+    }
   })
 
   /**
