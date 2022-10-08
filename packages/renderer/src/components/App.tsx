@@ -8,7 +8,7 @@ import {PopulatedMod} from '../../../../types/types'
 import ModList from './ModList'
 import Navbar from './Navbar'
 import Header from './Header'
-import Settings from './Settings'
+import SettingsTile from './SettingsTile'
 
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()
@@ -52,7 +52,7 @@ const App = () => {
             <Box m="md" />
             <Container>
               <SimpleGrid cols={1}>
-                <Settings />
+                <SettingsTile />
                 <ModList mods={populatedMods} />
               </SimpleGrid>
             </Container>

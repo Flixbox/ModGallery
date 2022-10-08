@@ -3,8 +3,8 @@ import {useEffect, useState} from 'react'
 import {Settings} from '../../../../types/types'
 
 const useSettings = () => {
-  const [settingsState, setSettingsState] = useState<Settings>({} as Settings)
-  const refreshSettings = async () => setSettingsState(await getSettings())
+  const [savedSettings, setSavedSettings] = useState<Settings>({} as Settings)
+  const refreshSettings = async () => setSavedSettings(await getSettings())
   useEffect(() => {
     ;(() => {
       refreshSettings()
@@ -15,7 +15,7 @@ const useSettings = () => {
     await setSettings({key, value})
     await refreshSettings()
   }
-  return {settingsState, writeSettings}
+  return {savedSettings, writeSettings}
 }
 
 export default useSettings
