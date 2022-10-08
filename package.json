@@ -1,8 +1,9 @@
 {
-  "name": "vite-electron-builder",
+  "name": "modgallery",
   "description": "Community Mod gallery for Hero's Hour",
   "private": false,
   "main": "packages/main/dist/index.cjs",
+  "author": "Flixbox",
   "scripts": {
     "build": "npm run build:main && npm run build:preload && npm run build:renderer",
     "build:main": "cd ./packages/main && vite build",
