@@ -14,10 +14,10 @@ const getDefaultModPath = () => {
 }
 
 const ipcHandlers = (browserWindow: BrowserWindow) => {
-  ipcMain.handle('settings:pickModFolder', async () => {
+  ipcMain.handle('settings:pickModFolder', async (e, defaultPath = getDefaultModPath()) => {
     const {canceled, filePaths} = await dialog.showOpenDialog(browserWindow, {
       properties: ['openDirectory', 'showHiddenFiles'],
-      defaultPath: getDefaultModPath(),
+      defaultPath,
     })
     if (canceled) {
       return

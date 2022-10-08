@@ -1,5 +1,5 @@
 import {pickModFolder} from '#preload'
-import {Button, Group, Paper} from '@mantine/core'
+import {Button, Group, Paper, Text} from '@mantine/core'
 import {useForm} from '@mantine/form'
 import {Settings} from '../../../../types/types'
 import useSettings from '../hooks/useSettings'
@@ -7,38 +7,21 @@ import useSettings from '../hooks/useSettings'
 const SettingsTile = () => {
   const {savedSettings, writeSettings} = useSettings()
   console.log(savedSettings)
-  const form = useForm<Settings>({
-    initialValues: {
-      ...savedSettings,
-    },
-  })
-  const onSubmit = (values: Settings) => console.log(values)
   return (
     <Paper
       shadow="xs"
       withBorder
       p="md"
     >
-      <form
-        onSubmit={form.onSubmit(async values => {
-          ;(await onSubmit(values)) && form.reset()
-        })}
-        role="form"
+      <Text>Mod folder: {savedSettings.modFolder}</Text>
+      <Button
+        onClick={async () => {
+          const result = await pickModFolder(savedSettings.modFolder)
+          if (result) writeSettings('modFolder', result)
+        }}
       >
-        <Button
-          onClick={async () => {
-            writeSettings("modFolder", await pickModFolder())
-          }}
-        >
-          Pick path
-        </Button>
-        <Group
-          position="right"
-          mt="md"
-        >
-          <Button type="submit">Save</Button>
-        </Group>
-      </form>
+        Pick path
+      </Button>
     </Paper>
   )
 }
