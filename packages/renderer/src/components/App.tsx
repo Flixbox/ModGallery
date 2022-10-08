@@ -2,22 +2,30 @@ import {MantineProvider, Container, Box, SimpleGrid, Text, TextInput, AppShell} 
 import {NotificationsProvider, showNotification} from '@mantine/notifications'
 import {usePrefersColorScheme} from '@anatoliygatt/use-prefers-color-scheme'
 import {useEffect, useState} from 'react'
-import unpopulatedModData from '../modData'
 import {fetchModDataSteam} from '../util/api'
 import {PopulatedMod} from '../../../../types/types'
 import ModList from './ModList'
 import Navbar from './Navbar'
 import Header from './Header'
 import SettingsTile from './SettingsTile'
-import {pullMods} from '#preload'
+import {pullMods, getMods} from '#preload'
+
+let didInit = false
 
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()
   const [opened, setOpened] = useState(false)
   const [populatedMods, setPopulatedMods] = useState<PopulatedMod[]>([])
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     ;(async () => {
+      if (didInit) return
+      didInit = true
+      setLoading(true)
+      console.log('Starting to pull...')
       await pullMods()
+      console.log('Await Pull done? In Render')
+      const unpopulatedModData = await getMods()
 
       const steamModData = await fetchModDataSteam(unpopulatedModData.mods)
       // setCars(cars)
@@ -29,6 +37,7 @@ const App = () => {
             ({} as PopulatedMod)),
         })),
       )
+      setLoading(false)
     })()
   }, [])
 

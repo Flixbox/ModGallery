@@ -1,8 +1,21 @@
 import {BrowserWindow, dialog, ipcMain} from 'electron'
 import {homedir} from 'os'
 import settings from 'electron-settings'
-import {pathExists} from 'fs-extra'
+import {pathExists, readFileSync} from 'fs-extra'
 import {SettingsOperation} from '../../../types/types'
+import util from 'util'
+const exec = util.promisify(require('child_process').exec)
+
+const execute = async (cmd: string, ignoreFailure = true) => {
+  try {
+    const {stdout, stderr, error} = await exec(cmd)
+    error && console.error(error)
+    stderr && console.error(stderr)
+    stdout && console.log(stdout)
+  } catch (e: any) {
+    if (!ignoreFailure) throw e
+  }
+}
 
 const getDefaultModPath = () => {
   let defaultPath = homedir()
@@ -39,8 +52,16 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
     settings.setSync(key, value)
   })
 
-  ipcMain.handle('mods:pull', () => {
-    console.log("Pulling mods!")
+  ipcMain.handle('mods:pull', async () => {
+    console.log('Pulling mods!')
+    await execute(`git clone https://github.com/Flixbox/ModGallery-Mods.git ./mods`)
+    await execute(`git --work-tree=./mods --git-dir=./mods/.git pull`, false)
+    console.log('Done pulling!')
+  })
+
+  ipcMain.handle('mods:get', async () => {
+    console.log('Reading file')
+    return readFileSync('./mods/modData.json')
   })
 }
 
