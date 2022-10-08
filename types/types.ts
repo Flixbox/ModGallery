@@ -26,3 +26,8 @@ export interface ModData {
 export interface Settings {
   modFolder: string
 }
+
+export interface SettingsOperation {
+  key: keyof Settings
+  value: any
+}

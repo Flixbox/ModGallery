@@ -10,7 +10,7 @@ const useSettings = () => {
       refreshSettings()
     })()
   }, [])
-  const writeSettings = async (key: string, value: any) => {
+  const writeSettings = async (key: keyof Settings, value: any) => {
     console.log('TODO', value)
     await setSettings({key, value})
     await refreshSettings()

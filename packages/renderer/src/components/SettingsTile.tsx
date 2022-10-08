@@ -27,7 +27,7 @@ const SettingsTile = () => {
       >
         <Button
           onClick={async () => {
-            await pickModFolder()
+            writeSettings("modFolder", await pickModFolder())
           }}
         >
           Pick path
