@@ -13,15 +13,17 @@ const SettingsTile = () => {
       withBorder
       p="md"
     >
-      <Text>Mod folder: {savedSettings.modFolder}</Text>
-      <Button
-        onClick={async () => {
-          const result = await pickModFolder(savedSettings.modFolder)
-          if (result) writeSettings('modFolder', result)
-        }}
-      >
-        Pick path
-      </Button>
+      <Group>
+        <Button
+          onClick={async () => {
+            const result = await pickModFolder(savedSettings.modFolder)
+            if (result) writeSettings('modFolder', result)
+          }}
+        >
+          Pick path
+        </Button>
+        <Text>Mod folder: {savedSettings.modFolder}</Text>
+      </Group>
     </Paper>
   )
 }
