@@ -4,10 +4,11 @@ import {usePrefersColorScheme} from '@anatoliygatt/use-prefers-color-scheme'
 import {useEffect, useState} from 'react'
 import unpopulatedModData from '../modData'
 import {fetchModDataSteam} from '../util/api'
-import {PopulatedMod} from 'types'
+import {PopulatedMod} from '../../../../types/types'
 import ModList from './ModList'
 import Navbar from './Navbar'
 import Header from './Header'
+import Settings from './Settings'
 
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()
@@ -51,7 +52,7 @@ const App = () => {
             <Box m="md" />
             <Container>
               <SimpleGrid cols={1}>
-                <Text>Yeeteroni</Text>
+                <Settings />
                 <ModList mods={populatedMods} />
               </SimpleGrid>
             </Container>

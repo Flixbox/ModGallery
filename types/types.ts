@@ -22,3 +22,7 @@ export interface PopulatedMod extends UnpopulatedMod {
 export interface ModData {
   mods: UnpopulatedMod[]
 }
+
+export interface Settings {
+  modFolder: string
+}

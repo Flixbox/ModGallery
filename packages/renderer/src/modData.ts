@@ -1,4 +1,4 @@
-import {ModData} from '../types'
+import {ModData} from '../../../types/types'
 
 const data: ModData = {
   mods: [

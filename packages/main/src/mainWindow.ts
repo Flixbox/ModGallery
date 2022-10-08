@@ -68,6 +68,8 @@ async function createWindow() {
     }
   })
 
+  ipcMain.handle('settings:get', () => settings.getSync())
+
   /**
    * URL for main window.
    * Vite dev server for development.
