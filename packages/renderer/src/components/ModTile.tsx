@@ -1,3 +1,4 @@
+import {installMod} from '#preload'
 import {faSteam} from '@fortawesome/free-brands-svg-icons'
 import {faDownload} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -23,8 +24,15 @@ interface ModTileProps {
 
 const ModTile = ({mod}: ModTileProps) => {
   const [loading, setLoading] = useState(false)
-  const installMod = () => {
+  const handleInstallClick = async () => {
     setLoading(true)
+    try {
+      await installMod({modFilesPath: mod.localPath, folderName: mod.folderName})
+    } catch (e) {
+      console.error(e)
+    }
+
+    setLoading(false)
   }
   return (
     <Card
@@ -69,7 +77,7 @@ const ModTile = ({mod}: ModTileProps) => {
           <Group align="flex-end">
             {mod.localPath && (
               <Button
-                onClick={installMod}
+                onClick={handleInstallClick}
                 variant="light"
                 color="blue"
                 mr="md"

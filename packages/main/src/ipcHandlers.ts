@@ -1,8 +1,16 @@
 import {BrowserWindow, dialog, ipcMain} from 'electron'
 import {homedir} from 'os'
 import settings from 'electron-settings'
-import {pathExists, readdirSync, readFileSync} from 'fs-extra'
-import {ModData, SettingsOperation} from '../../../types/types'
+import {
+  copy,
+  copySync,
+  emptyDirSync,
+  existsSync,
+  pathExists,
+  readdirSync,
+  readFileSync,
+} from 'fs-extra'
+import {ModData, ModInstallOperation, SettingsOperation} from '../../../types/types'
 import util from 'util'
 const exec = util.promisify(require('child_process').exec)
 
@@ -68,16 +76,26 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
       try {
         return {
           title: folder.name,
+          folderName: folder.name,
           localPath,
           ...JSON.parse(readFileSync(`${localPath}/mod.json`, {flag: 'r'}).toString()),
         }
       } catch (e) {
-        return {localPath, title: folder.name}
+        return {localPath, folderName: folder.name, title: folder.name}
       }
     })
     return {
       mods,
     } as ModData
+  })
+
+  ipcMain.handle('mod:install', (e, {modFilesPath, folderName}: ModInstallOperation) => {
+    let currentSettings = settings.getSync()
+    const targetFolder = `${currentSettings.modFolder as string}/${folderName}`
+    if (!existsSync(modFilesPath) || !readdirSync(modFilesPath).length)
+      throw new Error("Mod folder doesn't exist!")
+    emptyDirSync(targetFolder)
+    copySync(modFilesPath, targetFolder, {overwrite: true})
   })
 }
 

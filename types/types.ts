@@ -1,6 +1,7 @@
 export interface UnpopulatedMod {
   publishedfileid: string
   localPath: string
+  folderName: string
 }
 
 export interface PopulatedMod extends UnpopulatedMod {
@@ -31,4 +32,9 @@ export interface Settings {
 export interface SettingsOperation {
   key: keyof Settings
   value: any
+}
+
+export interface ModInstallOperation {
+  modFilesPath: string
+  folderName: string
 }

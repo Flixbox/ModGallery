@@ -4,4 +4,11 @@
 
 export {sha256sum} from './nodeCrypto'
 export {versions} from './versions'
-export {pickModFolder, getSettings, setSettings, pullMods, getMods} from './nodeOperations'
+export {
+  pickModFolder,
+  getSettings,
+  setSettings,
+  pullMods,
+  getMods,
+  installMod,
+} from './nodeOperations'
