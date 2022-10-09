@@ -1,7 +1,7 @@
 import {faSteam} from '@fortawesome/free-brands-svg-icons'
 import {faDownload} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {Badge, Button, Card, Group, Paper, Image, Text, Box, Tooltip} from '@mantine/core'
+import {Badge, Button, Card, Group, Paper, Image, Text, Box, Tooltip, Stack} from '@mantine/core'
 import {PopulatedMod} from '../../../../types/types'
 
 interface ModTileProps {
@@ -17,9 +17,11 @@ const ModTile = ({mod}: ModTileProps) => {
       withBorder
     >
       <Box sx={{display: 'flex'}}>
-        <Group
+        <Stack
           p="lg"
           sx={{flexGrow: 1}}
+          align="flex-start"
+          justify="space-between"
         >
           <Group
             position="apart"
@@ -43,34 +45,36 @@ const ModTile = ({mod}: ModTileProps) => {
             </Group>
           </Group>
 
-          {mod.localPath && (
-            <a
-              target="_blank"
-              href={`https://steamcommunity.com/sharedfiles/filedetails/?id=${mod.publishedfileid}`}
-            >
-              <Button
-                variant="light"
-                color="blue"
-                mr="md"
+          <Group align="flex-end">
+            {mod.localPath && (
+              <a
+                target="_blank"
+                href={`https://steamcommunity.com/sharedfiles/filedetails/?id=${mod.publishedfileid}`}
               >
-                Install
-              </Button>
-            </a>
-          )}
-          {mod.publishedfileid && (
-            <a
-              target="_blank"
-              href={`https://steamcommunity.com/sharedfiles/filedetails/?id=${mod.publishedfileid}`}
-            >
-              <Button
-                variant="light"
-                color="blue"
+                <Button
+                  variant="light"
+                  color="blue"
+                  mr="md"
+                >
+                  Install
+                </Button>
+              </a>
+            )}
+            {mod.publishedfileid && (
+              <a
+                target="_blank"
+                href={`https://steamcommunity.com/sharedfiles/filedetails/?id=${mod.publishedfileid}`}
               >
-                Open on Steam
-              </Button>
-            </a>
-          )}
-        </Group>
+                <Button
+                  variant="light"
+                  color="blue"
+                >
+                  Open on Steam
+                </Button>
+              </a>
+            )}
+          </Group>
+        </Stack>
 
         {mod.preview_url && (
           <Image
