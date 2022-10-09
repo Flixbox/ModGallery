@@ -1,6 +1,7 @@
 import {faSteam} from '@fortawesome/free-brands-svg-icons'
+import {faDownload} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {Badge, Button, Card, Group, Paper, Image, Text, Box} from '@mantine/core'
+import {Badge, Button, Card, Group, Paper, Image, Text, Box, Tooltip} from '@mantine/core'
 import {PopulatedMod} from '../../../../types/types'
 
 interface ModTileProps {
@@ -16,26 +17,46 @@ const ModTile = ({mod}: ModTileProps) => {
       withBorder
     >
       <Box sx={{display: 'flex'}}>
-        <Group p="lg">
-          <Text weight={500}>{mod.title}</Text>
-          <Box sx={{flexGrow: 1}} />
-          {mod.publishedfileid && <FontAwesomeIcon icon={faSteam} />}
-          <Text
-            size="sm"
-            color="dimmed"
+        <Group
+          p="lg"
+          sx={{flexGrow: 1}}
+        >
+          <Group
+            position="apart"
+            sx={{width: '100%'}}
           >
-            With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-            activities on and around the fjords of Norway
-          </Text>
+            <Group>
+              <Text weight={500}>{mod.title}</Text>
+              <div style={{flexGrow: 1}} />
+            </Group>
+            <Group>
+              {mod.publishedfileid && (
+                <Tooltip label="Available on Steam Workshop">
+                  <FontAwesomeIcon icon={faSteam} />
+                </Tooltip>
+              )}
+              {mod.localPath && (
+                <Tooltip label="Can be installed without Steam">
+                  <FontAwesomeIcon icon={faDownload} />
+                </Tooltip>
+              )}
+            </Group>
+          </Group>
 
-          <Box mt="md" />
-          <Button
-            variant="light"
-            color="blue"
-            mr="md"
-          >
-            Install
-          </Button>
+          {mod.localPath && (
+            <a
+              target="_blank"
+              href={`https://steamcommunity.com/sharedfiles/filedetails/?id=${mod.publishedfileid}`}
+            >
+              <Button
+                variant="light"
+                color="blue"
+                mr="md"
+              >
+                Install
+              </Button>
+            </a>
+          )}
           {mod.publishedfileid && (
             <a
               target="_blank"
@@ -54,7 +75,8 @@ const ModTile = ({mod}: ModTileProps) => {
         {mod.preview_url && (
           <Image
             src={mod.preview_url}
-            width={300}
+            height={200}
+            width={200}
             alt="mod preview"
           />
         )}

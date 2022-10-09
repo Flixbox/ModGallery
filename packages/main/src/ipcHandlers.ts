@@ -64,15 +64,15 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
     const contents = readdirSync('./mods/modFolders', {withFileTypes: true})
     const folders = contents.filter(dirent => dirent.isDirectory())
     const mods = folders.map(folder => {
+      const localPath = `./mods/modFolders/${folder.name}`
       try {
         return {
           title: folder.name,
-          ...JSON.parse(
-            readFileSync(`./mods/modFolders/${folder.name}/mod.json`, {flag: 'r'}).toString(),
-          ),
+          localPath,
+          ...JSON.parse(readFileSync(`${localPath}/mod.json`, {flag: 'r'}).toString()),
         }
       } catch (e) {
-        return {title: folder.name}
+        return {localPath, title: folder.name}
       }
     })
     return {
