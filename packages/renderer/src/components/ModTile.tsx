@@ -11,56 +11,54 @@ const ModTile = ({mod}: ModTileProps) => {
   return (
     <Card
       shadow="sm"
-      p="lg"
+      p={0}
       radius="md"
       withBorder
     >
-      <Card.Section>
-        <Image
-          src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
-          height={160}
-          alt="Norway"
-        />
-      </Card.Section>
+      <Box sx={{display: 'flex'}}>
+        <Group p="lg">
+          <Text weight={500}>{mod.title}</Text>
+          <Box sx={{flexGrow: 1}} />
+          {mod.publishedfileid && <FontAwesomeIcon icon={faSteam} />}
+          <Text
+            size="sm"
+            color="dimmed"
+          >
+            With Fjord Tours you can explore more of the magical fjord landscapes with tours and
+            activities on and around the fjords of Norway
+          </Text>
 
-      <Group
-        mt="md"
-        mb="xs"
-      >
-        <Text weight={500}>{mod.title}</Text>
-        <Box sx={{flexGrow: 1}} />
-        {mod.publishedfileid && <FontAwesomeIcon icon={faSteam} />}
-      </Group>
-
-      <Text
-        size="sm"
-        color="dimmed"
-      >
-        With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-        activities on and around the fjords of Norway
-      </Text>
-
-      <Box mt="md" />
-      <Button
-        variant="light"
-        color="blue"
-        mr="md"
-      >
-        Install
-      </Button>
-      {mod.publishedfileid && (
-        <a
-          target="_blank"
-          href={`https://steamcommunity.com/sharedfiles/filedetails/?id=${mod.publishedfileid}`}
-        >
+          <Box mt="md" />
           <Button
             variant="light"
             color="blue"
+            mr="md"
           >
-            Open on Steam
+            Install
           </Button>
-        </a>
-      )}
+          {mod.publishedfileid && (
+            <a
+              target="_blank"
+              href={`https://steamcommunity.com/sharedfiles/filedetails/?id=${mod.publishedfileid}`}
+            >
+              <Button
+                variant="light"
+                color="blue"
+              >
+                Open on Steam
+              </Button>
+            </a>
+          )}
+        </Group>
+
+        {mod.preview_url && (
+          <Image
+            src={mod.preview_url}
+            width={300}
+            alt="mod preview"
+          />
+        )}
+      </Box>
     </Card>
   )
 }
