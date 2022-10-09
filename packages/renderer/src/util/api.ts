@@ -2,7 +2,8 @@ import {PopulatedMod, UnpopulatedMod} from 'types'
 import {stringify} from 'query-string'
 
 export const fetchModDataSteam = async (mods: UnpopulatedMod[]) => {
-  const publishedfileids = mods.map(mod => mod.publishedfileid)
+  const modsWithId = mods.filter(mod => mod.publishedfileid)
+  const publishedfileids = modsWithId.map(mod => mod.publishedfileid)
   const res = await fetch(
     'https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/',
     {

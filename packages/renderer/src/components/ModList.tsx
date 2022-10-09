@@ -11,7 +11,7 @@ const ModList = ({mods}: ModListProps) => {
       {mods.map(mod => (
         <ModTile
           mod={mod}
-          key={mod.publishedfileid}
+          key={mod.title}
         />
       ))}
     </>
