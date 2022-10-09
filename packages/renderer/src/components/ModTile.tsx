@@ -1,7 +1,20 @@
 import {faSteam} from '@fortawesome/free-brands-svg-icons'
 import {faDownload} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {Badge, Button, Card, Group, Paper, Image, Text, Box, Tooltip, Stack} from '@mantine/core'
+import {
+  Badge,
+  Button,
+  Card,
+  Group,
+  Paper,
+  Image,
+  Text,
+  Box,
+  Tooltip,
+  Stack,
+  LoadingOverlay,
+} from '@mantine/core'
+import {useState} from 'react'
 import {PopulatedMod} from '../../../../types/types'
 
 interface ModTileProps {
@@ -9,6 +22,10 @@ interface ModTileProps {
 }
 
 const ModTile = ({mod}: ModTileProps) => {
+  const [loading, setLoading] = useState(false)
+  const installMod = () => {
+    setLoading(true)
+  }
   return (
     <Card
       shadow="sm"
@@ -16,6 +33,10 @@ const ModTile = ({mod}: ModTileProps) => {
       radius="md"
       withBorder
     >
+      <LoadingOverlay
+        visible={loading}
+        overlayBlur={2}
+      />
       <Box sx={{display: 'flex'}}>
         <Stack
           p="lg"
@@ -47,18 +68,14 @@ const ModTile = ({mod}: ModTileProps) => {
 
           <Group align="flex-end">
             {mod.localPath && (
-              <a
-                target="_blank"
-                href={`https://steamcommunity.com/sharedfiles/filedetails/?id=${mod.publishedfileid}`}
+              <Button
+                onClick={installMod}
+                variant="light"
+                color="blue"
+                mr="md"
               >
-                <Button
-                  variant="light"
-                  color="blue"
-                  mr="md"
-                >
-                  Install
-                </Button>
-              </a>
+                Install
+              </Button>
             )}
             {mod.publishedfileid && (
               <a
