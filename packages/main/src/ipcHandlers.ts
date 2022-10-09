@@ -1,8 +1,8 @@
 import {BrowserWindow, dialog, ipcMain} from 'electron'
 import {homedir} from 'os'
 import settings from 'electron-settings'
-import {pathExists, readFileSync} from 'fs-extra'
-import {SettingsOperation} from '../../../types/types'
+import {pathExists, readdirSync, readFileSync} from 'fs-extra'
+import {ModData, SettingsOperation} from '../../../types/types'
 import util from 'util'
 const exec = util.promisify(require('child_process').exec)
 
@@ -59,9 +59,23 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
     console.log('Done pulling!')
   })
 
-  ipcMain.handle('mods:get', async () => {
-    console.log('Reading file')
-    return readFileSync('./mods/modData.json')
+  ipcMain.handle('mods:get', () => {
+    console.log('Reading files')
+    const contents = readdirSync('./mods/modFolders', {withFileTypes: true})
+    const folders = contents.filter(dirent => dirent.isDirectory())
+    const mods = folders.map(folder => {
+      try {
+        return {
+          title: folder.name,
+          ...JSON.parse(readFileSync(`./mods/modFolders/${folder.name}/mod.json`, {flag: 'r'}).toString()),
+        }
+      } catch (e) {
+        return {title: folder.name}
+      }
+    })
+    return {
+      mods,
+    } as ModData
   })
 }
 

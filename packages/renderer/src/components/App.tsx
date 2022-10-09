@@ -26,6 +26,7 @@ const App = () => {
       await pullMods()
       console.log('Await Pull done? In Render')
       const unpopulatedModData = await getMods()
+      console.log('unpopulatedModData', unpopulatedModData)
 
       const steamModData = await fetchModDataSteam(unpopulatedModData.mods)
       // setCars(cars)
