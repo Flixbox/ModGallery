@@ -52,27 +52,43 @@ const ModTile = ({mod}: ModTileProps) => {
           align="flex-start"
           justify="space-between"
         >
-          <Group
-            position="apart"
-            sx={{width: '100%'}}
-          >
-            <Group>
-              <Text weight={500}>{mod.title}</Text>
-              <div style={{flexGrow: 1}} />
+          <Stack sx={{width: '100%'}}>
+            <Group
+              position="apart"
+              sx={{width: '100%'}}
+            >
+              <Group>
+                <Text weight={500}>{mod.title}</Text>
+                <div style={{flexGrow: 1}} />
+              </Group>
+              <Group>
+                {mod.publishedfileid && (
+                  <Tooltip label="Available on Steam Workshop">
+                    <FontAwesomeIcon icon={faSteam} />
+                  </Tooltip>
+                )}
+                {mod.localPath && (
+                  <Tooltip label="Can be installed without Steam">
+                    <FontAwesomeIcon icon={faDownload} />
+                  </Tooltip>
+                )}
+              </Group>
             </Group>
-            <Group>
-              {mod.publishedfileid && (
-                <Tooltip label="Available on Steam Workshop">
-                  <FontAwesomeIcon icon={faSteam} />
-                </Tooltip>
-              )}
-              {mod.localPath && (
-                <Tooltip label="Can be installed without Steam">
-                  <FontAwesomeIcon icon={faDownload} />
-                </Tooltip>
-              )}
-            </Group>
-          </Group>
+            {mod.tags && (
+              <Group>
+                {mod.tags.map(tag => (
+                  <Badge
+                    color="green"
+                    variant="light"
+                    sx={{width: 'fit-content'}}
+                    key={tag.tag}
+                  >
+                    {tag.tag}
+                  </Badge>
+                ))}
+              </Group>
+            )}
+          </Stack>
 
           <Group align="flex-end">
             {mod.localPath && (
