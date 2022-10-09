@@ -67,7 +67,9 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
       try {
         return {
           title: folder.name,
-          ...JSON.parse(readFileSync(`./mods/modFolders/${folder.name}/mod.json`, {flag: 'r'}).toString()),
+          ...JSON.parse(
+            readFileSync(`./mods/modFolders/${folder.name}/mod.json`, {flag: 'r'}).toString(),
+          ),
         }
       } catch (e) {
         return {title: folder.name}
