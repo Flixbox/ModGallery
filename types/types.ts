@@ -2,6 +2,8 @@ export interface UnpopulatedMod {
   publishedfileid: string
   localPath: string
   folderName: string
+  version: number
+  versionText: string
 }
 
 export interface PopulatedMod extends UnpopulatedMod {

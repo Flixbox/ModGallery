@@ -1,6 +1,6 @@
 import {installMod} from '#preload'
 import {faSteam} from '@fortawesome/free-brands-svg-icons'
-import {faDownload} from '@fortawesome/free-solid-svg-icons'
+import {faDownload, faQuestionCircle, faWarning} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
   Badge,
@@ -58,7 +58,17 @@ const ModTile = ({mod}: ModTileProps) => {
               sx={{width: '100%'}}
             >
               <Group>
+                {mod.versionText && (
+                  <Badge
+                    color="yellow"
+                    variant="light"
+                    sx={{width: 'fit-content'}}
+                  >
+                    {mod.versionText}
+                  </Badge>
+                )}
                 <Text weight={500}>{mod.title}</Text>
+
                 <div style={{flexGrow: 1}} />
               </Group>
               <Group>
@@ -70,6 +80,11 @@ const ModTile = ({mod}: ModTileProps) => {
                 {mod.localPath && (
                   <Tooltip label="Can be installed without Steam">
                     <FontAwesomeIcon icon={faDownload} />
+                  </Tooltip>
+                )}
+                {!mod.version && (
+                  <Tooltip label="Version information missing">
+                    <FontAwesomeIcon icon={faQuestionCircle} />
                   </Tooltip>
                 )}
               </Group>
