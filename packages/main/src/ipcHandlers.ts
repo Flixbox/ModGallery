@@ -9,6 +9,7 @@ import {
   pathExists,
   readdirSync,
   readFileSync,
+  mkdirSync,
 } from 'fs-extra'
 import {ModData, ModInstallOperation, SettingsOperation} from '../../../types/types'
 import util from 'util'
@@ -25,16 +26,30 @@ const execute = async (cmd: string, ignoreFailure = true) => {
   }
 }
 
-const getDefaultModPath = () => {
+const getDefaultRootPath = () => {
   let defaultPath = homedir()
-  if (process.platform === 'win32')
-    defaultPath = `${defaultPath}\\AppData\\Local\\Hero_s_Hour\\mods`
+  if (process.platform === 'win32') defaultPath = `${defaultPath}\\AppData\\Local\\Hero_s_Hour`
   console.log(defaultPath)
-  if (!pathExists(defaultPath)) defaultPath = homedir()
+  if (!pathExists(defaultPath)) defaultPath = `${homedir()}\\Hero_s_Hour`
   return defaultPath
 }
 
+const verifyFolders = () => {
+  mkdirSync(`${getDefaultRootPath()}\\mods`, {recursive: true})
+  mkdirSync(`${getDefaultRootPath()}\\custom maps`, {recursive: true})
+}
+
+const getDefaultModPath = () => {
+  return `${getDefaultRootPath()}\\mods`
+}
+
+const getDefaultMapPath = () => {
+  return `${getDefaultRootPath()}\\custom maps`
+}
+
 const ipcHandlers = (browserWindow: BrowserWindow) => {
+  verifyFolders()
+
   ipcMain.handle('settings:pickModFolder', async (e, defaultPath = getDefaultModPath()) => {
     const {canceled, filePaths} = await dialog.showOpenDialog(browserWindow, {
       properties: ['openDirectory', 'showHiddenFiles'],
@@ -69,9 +84,9 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
 
   ipcMain.handle('mods:get', () => {
     console.log('Reading files')
-    const contents = readdirSync('./mods/modFolders', {withFileTypes: true})
-    const folders = contents.filter(dirent => dirent.isDirectory())
-    const mods = folders.map(folder => {
+    const availableModContents = readdirSync('./mods/modFolders', {withFileTypes: true})
+    const availableModFolders = availableModContents.filter(dirent => dirent.isDirectory())
+    const availableMods = availableModFolders.map(folder => {
       const localPath = `./mods/modFolders/${folder.name}`
       try {
         return {
@@ -85,7 +100,7 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
       }
     })
     return {
-      mods,
+      mods: availableMods,
     } as ModData
   })
 
