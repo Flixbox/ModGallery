@@ -1,6 +1,11 @@
 import {installMod} from '#preload'
 import {faSteam} from '@fortawesome/free-brands-svg-icons'
-import {faDownload, faQuestionCircle, faWarning} from '@fortawesome/free-solid-svg-icons'
+import {
+  faDownload,
+  faFileCircleCheck,
+  faQuestionCircle,
+  faWarning,
+} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
   Badge,
@@ -80,6 +85,11 @@ const ModTile = ({mod}: ModTileProps) => {
                 {mod.localPath && (
                   <Tooltip label="Can be installed without Steam">
                     <FontAwesomeIcon icon={faDownload} />
+                  </Tooltip>
+                )}
+                {mod.installedPath && (
+                  <Tooltip label="Installed">
+                    <FontAwesomeIcon icon={faFileCircleCheck} />
                   </Tooltip>
                 )}
                 {!mod.version && (

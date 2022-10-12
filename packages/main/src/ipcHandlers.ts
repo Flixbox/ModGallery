@@ -11,7 +11,7 @@ import {
   readFileSync,
   mkdirSync,
 } from 'fs-extra'
-import {ModData, ModInstallOperation, SettingsOperation} from '../../../types/types'
+import {ModData, ModInstallOperation, SettingsOperation, UnpopulatedMod} from '../../../types/types'
 import util from 'util'
 const exec = util.promisify(require('child_process').exec)
 
@@ -47,9 +47,30 @@ const getDefaultMapPath = () => {
   return `${getDefaultRootPath()}\\custom maps`
 }
 
-const ipcHandlers = (browserWindow: BrowserWindow) => {
-  verifyFolders()
+const readModsFolder = (folderPath: string) => {
+  console.log('Reading files')
+  const availableModContents = readdirSync(folderPath, {withFileTypes: true})
+  const availableModFolders = availableModContents.filter(dirent => dirent.isDirectory())
+  const availableMods = availableModFolders.map(folder => {
+    const localPath = `${folderPath}/${folder.name}`
+    const baseData = {localPath, folderName: folder.name, title: folder.name}
+    try {
+      return {
+        ...baseData,
+        ...JSON.parse(readFileSync(`${localPath}/mod.json`, {flag: 'r'}).toString()),
+      } as UnpopulatedMod
+    } catch (e) {
+      return baseData as unknown as UnpopulatedMod
+    }
+  })
+  return availableMods
+}
 
+let currentSettings = settings.getSync()
+if (!currentSettings.modFolder) settings.setSync('modFolder', getDefaultModPath())
+verifyFolders()
+
+const ipcHandlers = (browserWindow: BrowserWindow) => {
   ipcMain.handle('settings:pickModFolder', async (e, defaultPath = getDefaultModPath()) => {
     const {canceled, filePaths} = await dialog.showOpenDialog(browserWindow, {
       properties: ['openDirectory', 'showHiddenFiles'],
@@ -65,8 +86,6 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
   })
 
   ipcMain.handle('settings:get', () => {
-    let currentSettings = settings.getSync()
-    if (!currentSettings.modFolder) settings.setSync('modFolder', getDefaultModPath())
     currentSettings = settings.getSync()
     return currentSettings
   })
@@ -83,30 +102,30 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
   })
 
   ipcMain.handle('mods:get', () => {
-    console.log('Reading files')
-    const availableModContents = readdirSync('./mods/modFolders', {withFileTypes: true})
-    const availableModFolders = availableModContents.filter(dirent => dirent.isDirectory())
-    const availableMods = availableModFolders.map(folder => {
-      const localPath = `./mods/modFolders/${folder.name}`
-      try {
+    let currentSettings = settings.getSync()
+    const availableMods = readModsFolder('./mods/modFolders')
+    const installedMods = readModsFolder(currentSettings.modFolder as string)
+    const finalizedMods = []
+    finalizedMods.push(
+      ...availableMods.map(availableMod => {
+        const result = installedMods.find(
+          installedMod => installedMod.folderName === availableMod.folderName,
+        )
+        if (result) availableMod.installedPath = result.localPath
         return {
-          title: folder.name,
-          folderName: folder.name,
-          localPath,
-          ...JSON.parse(readFileSync(`${localPath}/mod.json`, {flag: 'r'}).toString()),
+          ...result,
+          ...availableMod,
         }
-      } catch (e) {
-        return {localPath, folderName: folder.name, title: folder.name}
-      }
-    })
+      }),
+    )
     return {
-      mods: availableMods,
+      mods: finalizedMods,
     } as ModData
   })
 
   ipcMain.handle('mod:install', (e, {modFilesPath, folderName}: ModInstallOperation) => {
     let currentSettings = settings.getSync()
-    const targetFolder = `${currentSettings.modFolder as string}/${folderName}`
+    const targetFolder = `${currentSettings.modFolder?.toString()}/${folderName}`
     if (!existsSync(modFilesPath) || !readdirSync(modFilesPath).length)
       throw new Error("Mod folder doesn't exist!")
     emptyDirSync(targetFolder)
