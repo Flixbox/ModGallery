@@ -1,5 +1,10 @@
 import {ipcRenderer} from 'electron'
-import {Settings, SettingsOperation, ModData, ModInstallOperation} from '../../../types/types'
+import {
+  ModDeleteOperation,
+  SettingsOperation,
+  ModData,
+  ModInstallOperation,
+} from '../../../types/types'
 
 export const pickModFolder = (defaultPath?: string) =>
   ipcRenderer.invoke('settings:pickModFolder', defaultPath)
@@ -10,3 +15,5 @@ export const pullMods = async () => await ipcRenderer.invoke('mods:pull')
 export const getMods = async () => (await ipcRenderer.invoke('mods:get')) as ModData
 export const installMod = async ({modFilesPath, folderName}: ModInstallOperation) =>
   await ipcRenderer.invoke('mod:install', {modFilesPath, folderName})
+export const deleteMod = async ({installedPath}: ModDeleteOperation) =>
+  await ipcRenderer.invoke('mod:delete', {installedPath})

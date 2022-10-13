@@ -1,4 +1,4 @@
-import {installMod} from '#preload'
+import {installMod, deleteMod} from '#preload'
 import {faSteam} from '@fortawesome/free-brands-svg-icons'
 import {
   faDownload,
@@ -25,14 +25,35 @@ import {PopulatedMod} from '../../../../types/types'
 
 interface ModTileProps {
   mod: PopulatedMod
+  refreshMods: () => void
 }
 
-const ModTile = ({mod}: ModTileProps) => {
+const ModTile = ({mod, refreshMods}: ModTileProps) => {
   const [loading, setLoading] = useState(false)
   const handleInstallClick = async () => {
     setLoading(true)
     try {
       await installMod({modFilesPath: mod.localPath, folderName: mod.folderName})
+    } catch (e) {
+      console.error(e)
+    }
+
+    setLoading(false)
+  }
+  const handleUninstallClick = async () => {
+    setLoading(true)
+    try {
+      await deleteMod({installedPath: mod.installedPath as string})
+    } catch (e) {
+      console.error(e)
+    }
+
+    setLoading(false)
+  }
+  const handleDeleteClick = async () => {
+    setLoading(true)
+    try {
+      await deleteMod({installedPath: mod.installedPath as string})
     } catch (e) {
       console.error(e)
     }
@@ -116,7 +137,7 @@ const ModTile = ({mod}: ModTileProps) => {
           </Stack>
 
           <Group align="flex-end">
-            {mod.localPath && (
+            {mod.localPath && !mod.installedPath && (
               <Button
                 onClick={handleInstallClick}
                 variant="light"
@@ -124,6 +145,26 @@ const ModTile = ({mod}: ModTileProps) => {
                 mr="md"
               >
                 Install
+              </Button>
+            )}
+            {mod.localPath && mod.installedPath && (
+              <Button
+                onClick={handleUninstallClick}
+                variant="light"
+                color="red"
+                mr="md"
+              >
+                Uninstall
+              </Button>
+            )}
+            {!mod.localPath && mod.installedPath && (
+              <Button
+                onClick={handleDeleteClick}
+                variant="light"
+                color="red"
+                mr="md"
+              >
+                Delete permanently
               </Button>
             )}
             {mod.publishedfileid && (

@@ -11,4 +11,5 @@ export {
   pullMods,
   getMods,
   installMod,
+  deleteMod
 } from './nodeOperations'

@@ -127,7 +127,6 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
       }),
     )
 
-    // TODO Show unrecognized mods in list by adding them to finalized mods
     return {
       mods: finalizedMods,
     } as ModData

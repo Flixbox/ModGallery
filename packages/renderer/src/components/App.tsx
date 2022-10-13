@@ -20,27 +20,31 @@ const App = () => {
   useEffect(() => {
     ;(async () => {
       if (didInit) return
-      didInit = true
-      setLoading(true)
-      console.log('Starting to pull...')
-      await pullMods()
-      console.log('Await Pull done? In Render')
-      const unpopulatedModData = await getMods()
-      console.log('unpopulatedModData', unpopulatedModData)
-
-      const steamModData = await fetchModDataSteam(unpopulatedModData.mods)
-      // setCars(cars)
-      console.log('steamModData', steamModData)
-      setPopulatedMods(
-        unpopulatedModData.mods.map(unpopulatedMod => ({
-          ...unpopulatedMod,
-          ...(steamModData.find(mod => unpopulatedMod.publishedfileid === mod.publishedfileid) ??
-            ({} as PopulatedMod)),
-        })),
-      )
-      setLoading(false)
+      await refreshMods()
     })()
   }, [])
+
+  const refreshMods = async () => {
+    didInit = true
+    setLoading(true)
+    console.log('Starting to pull...')
+    await pullMods()
+    console.log('Await Pull done? In Render')
+    const unpopulatedModData = await getMods()
+    console.log('unpopulatedModData', unpopulatedModData)
+
+    const steamModData = await fetchModDataSteam(unpopulatedModData.mods)
+    // setCars(cars)
+    console.log('steamModData', steamModData)
+    setPopulatedMods(
+      unpopulatedModData.mods.map(unpopulatedMod => ({
+        ...unpopulatedMod,
+        ...(steamModData.find(mod => unpopulatedMod.publishedfileid === mod.publishedfileid) ??
+          ({} as PopulatedMod)),
+      })),
+    )
+    setLoading(false)
+  }
 
   return (
     <MantineProvider
@@ -56,7 +60,10 @@ const App = () => {
           <Container>
             <SimpleGrid cols={1}>
               <SettingsTile />
-              <ModList mods={populatedMods} />
+              <ModList
+                mods={populatedMods}
+                refreshMods={refreshMods}
+              />
             </SimpleGrid>
           </Container>
         </>

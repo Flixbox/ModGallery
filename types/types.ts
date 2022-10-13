@@ -41,3 +41,7 @@ export interface ModInstallOperation {
   modFilesPath: string
   folderName: string
 }
+
+export interface ModDeleteOperation {
+  installedPath: string
+}
