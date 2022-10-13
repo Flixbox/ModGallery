@@ -10,8 +10,15 @@ import {
   readdirSync,
   readFileSync,
   mkdirSync,
+  removeSync,
 } from 'fs-extra'
-import {ModData, ModInstallOperation, SettingsOperation, UnpopulatedMod} from '../../../types/types'
+import {
+  ModData,
+  ModDeleteOperation,
+  ModInstallOperation,
+  SettingsOperation,
+  UnpopulatedMod,
+} from '../../../types/types'
 import util from 'util'
 const exec = util.promisify(require('child_process').exec)
 
@@ -139,6 +146,12 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
       throw new Error("Mod folder doesn't exist!")
     emptyDirSync(targetFolder)
     copySync(modFilesPath, targetFolder, {overwrite: true})
+  })
+
+  ipcMain.handle('mod:delete', (e, {installedPath}: ModDeleteOperation) => {
+    if (!existsSync(installedPath) || !readdirSync(installedPath).length)
+      throw new Error("Mod folder doesn't exist!")
+    removeSync(installedPath)
   })
 }
 

@@ -1,4 +1,13 @@
-import {MantineProvider, Container, Box, SimpleGrid, Text, TextInput, AppShell} from '@mantine/core'
+import {
+  MantineProvider,
+  Container,
+  Box,
+  SimpleGrid,
+  Text,
+  TextInput,
+  AppShell,
+  LoadingOverlay,
+} from '@mantine/core'
 import {NotificationsProvider, showNotification} from '@mantine/notifications'
 import {usePrefersColorScheme} from '@anatoliygatt/use-prefers-color-scheme'
 import {useEffect, useState} from 'react'
@@ -25,6 +34,7 @@ const App = () => {
   }, [])
 
   const refreshMods = async () => {
+    console.log('refreshMods')
     didInit = true
     setLoading(true)
     console.log('Starting to pull...')
@@ -55,18 +65,20 @@ const App = () => {
       }}
     >
       <NotificationsProvider>
-        <>
-          <Box m="md" />
-          <Container>
-            <SimpleGrid cols={1}>
-              <SettingsTile />
-              <ModList
-                mods={populatedMods}
-                refreshMods={refreshMods}
-              />
-            </SimpleGrid>
-          </Container>
-        </>
+        <LoadingOverlay
+          visible={loading}
+          overlayBlur={2}
+        />
+        <Box m="md" />
+        <Container>
+          <SimpleGrid cols={1}>
+            <SettingsTile />
+            <ModList
+              mods={populatedMods}
+              refreshMods={refreshMods}
+            />
+          </SimpleGrid>
+        </Container>
       </NotificationsProvider>
     </MantineProvider>
   )

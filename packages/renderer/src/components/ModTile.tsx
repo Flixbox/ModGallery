@@ -34,6 +34,7 @@ const ModTile = ({mod, refreshMods}: ModTileProps) => {
     setLoading(true)
     try {
       await installMod({modFilesPath: mod.localPath, folderName: mod.folderName})
+      await refreshMods()
     } catch (e) {
       console.error(e)
     }
@@ -44,6 +45,7 @@ const ModTile = ({mod, refreshMods}: ModTileProps) => {
     setLoading(true)
     try {
       await deleteMod({installedPath: mod.installedPath as string})
+      await refreshMods()
     } catch (e) {
       console.error(e)
     }
@@ -54,6 +56,7 @@ const ModTile = ({mod, refreshMods}: ModTileProps) => {
     setLoading(true)
     try {
       await deleteMod({installedPath: mod.installedPath as string})
+      await refreshMods()
     } catch (e) {
       console.error(e)
     }
