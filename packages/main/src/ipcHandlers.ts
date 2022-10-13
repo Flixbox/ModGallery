@@ -47,13 +47,13 @@ const getDefaultMapPath = () => {
   return `${getDefaultRootPath()}\\custom maps`
 }
 
-const readModsFolder = (folderPath: string) => {
+const readModsFolder = (folderPath: string, pathKey = 'localPath') => {
   console.log('Reading files')
   const availableModContents = readdirSync(folderPath, {withFileTypes: true})
   const availableModFolders = availableModContents.filter(dirent => dirent.isDirectory())
   const availableMods = availableModFolders.map(folder => {
     const localPath = `${folderPath}/${folder.name}`
-    const baseData = {localPath, folderName: folder.name, title: folder.name}
+    const baseData = {[pathKey]: localPath, folderName: folder.name, title: folder.name}
     try {
       return {
         ...baseData,
@@ -104,20 +104,30 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
   ipcMain.handle('mods:get', () => {
     let currentSettings = settings.getSync()
     const availableMods = readModsFolder('./mods/modFolders')
-    const installedMods = readModsFolder(currentSettings.modFolder as string)
+    const installedMods = readModsFolder(currentSettings.modFolder as string, 'installedPath')
     const finalizedMods = []
     finalizedMods.push(
       ...availableMods.map(availableMod => {
         const result = installedMods.find(
           installedMod => installedMod.folderName === availableMod.folderName,
         )
-        if (result) availableMod.installedPath = result.localPath
+        if (result) availableMod.installedPath = result.installedPath
         return {
           ...result,
           ...availableMod,
         }
       }),
     )
+    finalizedMods.push(
+      ...installedMods.filter(installedMod => {
+        const result = availableMods.find(
+          availableMod => installedMod.folderName === availableMod.folderName,
+        )
+        if (!result) return true
+      }),
+    )
+
+    // TODO Show unrecognized mods in list by adding them to finalized mods
     return {
       mods: finalizedMods,
     } as ModData
