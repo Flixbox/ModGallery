@@ -1,8 +1,8 @@
-import {BrowserWindow, dialog, ipcMain} from 'electron'
+import type {BrowserWindow} from 'electron'
+import {dialog, ipcMain} from 'electron'
 import {homedir} from 'os'
 import settings from 'electron-settings'
 import {
-  copy,
   copySync,
   emptyDirSync,
   existsSync,
@@ -12,7 +12,7 @@ import {
   mkdirSync,
   removeSync,
 } from 'fs-extra'
-import {
+import type {
   ModData,
   ModDeleteOperation,
   ModInstallOperation,
@@ -28,7 +28,7 @@ const execute = async (cmd: string, ignoreFailure = true) => {
     error && console.error(error)
     stderr && console.error(stderr)
     stdout && console.log(stdout)
-  } catch (e: any) {
+  } catch (e: unknown) {
     if (!ignoreFailure) throw e
   }
 }
@@ -50,9 +50,11 @@ const getDefaultModPath = () => {
   return `${getDefaultRootPath()}\\mods`
 }
 
+/*
 const getDefaultMapPath = () => {
   return `${getDefaultRootPath()}\\custom maps`
 }
+*/
 
 const readModsFolder = (folderPath: string, pathKey = 'localPath') => {
   console.log('Reading files')
@@ -103,13 +105,13 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
 
   ipcMain.handle('mods:pull', async () => {
     console.log('Pulling mods!')
-    await execute(`git clone https://github.com/Flixbox/ModGallery-Mods.git ./mods`)
-    await execute(`git --work-tree=./mods --git-dir=./mods/.git pull`, false)
+    await execute('git clone https://github.com/Flixbox/ModGallery-Mods.git ./mods')
+    await execute('git --work-tree=./mods --git-dir=./mods/.git pull', false)
     console.log('Done pulling!')
   })
 
   ipcMain.handle('mods:get', () => {
-    let currentSettings = settings.getSync()
+    const currentSettings = settings.getSync()
     const availableMods = readModsFolder('./mods/modFolders')
     const installedMods = readModsFolder(currentSettings.modFolder as string, 'installedPath')
     const finalizedMods = []
@@ -140,7 +142,7 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
   })
 
   ipcMain.handle('mod:install', (e, {modFilesPath, folderName}: ModInstallOperation) => {
-    let currentSettings = settings.getSync()
+    const currentSettings = settings.getSync()
     const targetFolder = `${currentSettings.modFolder?.toString()}/${folderName}`
     if (!existsSync(modFilesPath) || !readdirSync(modFilesPath).length)
       throw new Error("Mod folder doesn't exist!")

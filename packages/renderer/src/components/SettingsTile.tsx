@@ -1,7 +1,5 @@
 import {pickModFolder} from '#preload'
 import {Button, Group, Paper, Text} from '@mantine/core'
-import {useForm} from '@mantine/form'
-import {Settings} from '../../../../types/types'
 import useSettings from '../hooks/useSettings'
 
 const SettingsTile = () => {

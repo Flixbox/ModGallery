@@ -1,5 +1,5 @@
 import {ipcRenderer} from 'electron'
-import {
+import type {
   ModDeleteOperation,
   SettingsOperation,
   ModData,

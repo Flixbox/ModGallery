@@ -1,4 +1,4 @@
-import {app, BrowserWindow, dialog, ipcMain} from 'electron'
+import {app, BrowserWindow} from 'electron'
 import {join} from 'path'
 import {URL} from 'url'
 import ipcHandlers from './ipcHandlers'

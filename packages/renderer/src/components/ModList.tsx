@@ -1,4 +1,4 @@
-import {PopulatedMod} from '../../../../types/types'
+import type {PopulatedMod} from '../../../../types/types'
 import ModTile from './ModTile'
 
 interface ModListProps {

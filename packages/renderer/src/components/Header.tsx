@@ -1,7 +1,7 @@
-import {Burger, Header, MediaQuery, Text, ActionIcon} from '@mantine/core'
-import {Home} from 'react-feather'
+import {Burger, Header, MediaQuery, Text} from '@mantine/core'
+import type {useState} from 'react'
 
-export default function HeaderComponent(props) {
+export default function HeaderComponent(props: {opened: boolean; setOpened: typeof useState}) {
   return (
     <Header
       height={70}
@@ -20,7 +20,7 @@ export default function HeaderComponent(props) {
         >
           <Burger
             opened={props.opened}
-            onClick={() => props.setOpened(o => !o)}
+            onClick={() => props.setOpened(props.opened ? false : true)}
             size="sm"
             mr="xl"
           />

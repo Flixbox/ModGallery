@@ -1,4 +1,4 @@
-import {PopulatedMod, UnpopulatedMod} from 'types'
+import type {PopulatedMod, UnpopulatedMod} from '../../../../types/types'
 import {stringify} from 'query-string'
 
 export const fetchModDataSteam = async (mods: UnpopulatedMod[]) => {

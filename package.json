@@ -16,7 +16,7 @@
     "test:preload": "vitest run -r packages/preload --passWithNoTests",
     "test:renderer": "vitest run -r packages/renderer --passWithNoTests",
     "watch": "node scripts/watch.mjs",
-    "lint": "eslint . --ext js,mjs,cjs,ts,mts,cts,vue",
+    "lint": "eslint . --ext js,jsx,mjs,cjs,ts,tsx,mts,cts,vue",
     "typecheck:main": "tsc --noEmit -p packages/main/tsconfig.json",
     "typecheck:preload": "tsc --noEmit -p packages/preload/tsconfig.json",
     "typecheck:renderer": "vue-tsc --noEmit -p packages/renderer/tsconfig.json",
@@ -29,6 +29,7 @@
     "@types/react-dom": "^18.0.6",
     "@types/source-list-map": "^0.1.2",
     "@typescript-eslint/eslint-plugin": "5.38.1",
+    "@typescript-eslint/parser": "^5.40.0",
     "@vitejs/plugin-react": "^2.1.0",
     "@vue/test-utils": "2.1.0",
     "cross-env": "7.0.3",
@@ -46,6 +47,11 @@
   "dependencies": {
     "@anatoliygatt/use-prefers-color-scheme": "^1.0.5",
     "@emotion/react": "^11.10.4",
+    "@fortawesome/fontawesome-svg-core": "^6.1.2",
+    "@fortawesome/free-brands-svg-icons": "^6.1.2",
+    "@fortawesome/free-regular-svg-icons": "^6.1.2",
+    "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@mantine/core": "^5.4.0",
     "@mantine/form": "^5.4.0",
     "@mantine/hooks": "^5.4.0",
@@ -57,11 +63,6 @@
     "query-string": "^7.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-feather": "^2.0.10",
-    "@fortawesome/fontawesome-svg-core": "^6.1.2",
-    "@fortawesome/free-brands-svg-icons": "^6.1.2",
-    "@fortawesome/free-regular-svg-icons": "^6.1.2",
-    "@fortawesome/free-solid-svg-icons": "^6.1.2",
-    "@fortawesome/react-fontawesome": "^0.2.0"
+    "react-feather": "^2.0.10"
   }
 }

@@ -1,6 +1,6 @@
 import {getSettings, setSettings} from '#preload'
 import {useEffect, useState} from 'react'
-import {Settings} from '../../../../types/types'
+import type {Settings, SettingsValue} from '../../../../types/types'
 
 const useSettings = () => {
   const [savedSettings, setSavedSettings] = useState<Settings>({} as Settings)
@@ -10,7 +10,7 @@ const useSettings = () => {
       refreshSettings()
     })()
   }, [])
-  const writeSettings = async (key: keyof Settings, value: any) => {
+  const writeSettings = async (key: keyof Settings, value: SettingsValue) => {
     console.log('TODO', value)
     await setSettings({key, value})
     await refreshSettings()

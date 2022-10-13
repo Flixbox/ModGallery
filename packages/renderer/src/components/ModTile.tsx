@@ -1,18 +1,12 @@
 import {installMod, deleteMod} from '#preload'
 import {faSteam} from '@fortawesome/free-brands-svg-icons'
-import {
-  faDownload,
-  faFileCircleCheck,
-  faQuestionCircle,
-  faWarning,
-} from '@fortawesome/free-solid-svg-icons'
+import {faDownload, faFileCircleCheck, faQuestionCircle} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
   Badge,
   Button,
   Card,
   Group,
-  Paper,
   Image,
   Text,
   Box,
@@ -21,7 +15,7 @@ import {
   LoadingOverlay,
 } from '@mantine/core'
 import {useState} from 'react'
-import {PopulatedMod} from '../../../../types/types'
+import type {PopulatedMod} from '../../../../types/types'
 
 interface ModTileProps {
   mod: PopulatedMod

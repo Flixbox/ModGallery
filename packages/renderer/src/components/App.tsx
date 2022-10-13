@@ -1,21 +1,10 @@
-import {
-  MantineProvider,
-  Container,
-  Box,
-  SimpleGrid,
-  Text,
-  TextInput,
-  AppShell,
-  LoadingOverlay,
-} from '@mantine/core'
-import {NotificationsProvider, showNotification} from '@mantine/notifications'
+import {MantineProvider, Container, Box, SimpleGrid, LoadingOverlay} from '@mantine/core'
+import {NotificationsProvider} from '@mantine/notifications'
 import {usePrefersColorScheme} from '@anatoliygatt/use-prefers-color-scheme'
 import {useEffect, useState} from 'react'
 import {fetchModDataSteam} from '../util/api'
-import {PopulatedMod} from '../../../../types/types'
+import type {PopulatedMod} from '../../../../types/types'
 import ModList from './ModList'
-import Navbar from './Navbar'
-import Header from './Header'
 import SettingsTile from './SettingsTile'
 import {pullMods, getMods} from '#preload'
 
@@ -23,7 +12,6 @@ let didInit = false
 
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()
-  const [opened, setOpened] = useState(false)
   const [populatedMods, setPopulatedMods] = useState<PopulatedMod[]>([])
   const [loading, setLoading] = useState(false)
   useEffect(() => {
@@ -72,8 +60,8 @@ const App = () => {
             height: '100%',
             left: 0,
             top: 0,
-            pointerEvents: "none",
-            zIndex: 1
+            pointerEvents: 'none',
+            zIndex: 1,
           }}
         >
           <LoadingOverlay

@@ -32,9 +32,11 @@ export interface Settings {
   modFolder: string
 }
 
+export type SettingsValue = string | []
+
 export interface SettingsOperation {
   key: keyof Settings
-  value: any
+  value: SettingsValue
 }
 
 export interface ModInstallOperation {
