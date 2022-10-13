@@ -65,10 +65,20 @@ const App = () => {
       }}
     >
       <NotificationsProvider>
-        <LoadingOverlay
-          visible={loading}
-          overlayBlur={2}
-        />
+        <Box
+          sx={{
+            position: 'fixed',
+            width: '100%',
+            height: '100%',
+            left: 0,
+            top: 0,
+          }}
+        >
+          <LoadingOverlay
+            visible={loading}
+            overlayBlur={2}
+          />
+        </Box>
         <Box m="md" />
         <Container>
           <SimpleGrid cols={1}>
