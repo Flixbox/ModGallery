@@ -1,7 +1,6 @@
 import type {ElectronApplication} from 'playwright'
 import {_electron as electron} from 'playwright'
 import {afterAll, beforeAll, expect, test} from 'vitest'
-import {createHash} from 'crypto'
 
 let electronApp: ElectronApplication
 
@@ -43,27 +42,7 @@ test('Main window web content', async () => {
   expect((await element.innerHTML()).trim(), 'Window content was empty').not.equal('')
 })
 
-test('Preload versions', async () => {
+test('Show mods', async () => {
   const page = await electronApp.firstWindow()
-  const renderedVersions = await page.locator('#process-versions').innerText()
-
-  const expectedVersions = await electronApp.evaluate(() => process.versions)
-
-  for (const expectedVersionsKey in expectedVersions) {
-    expect(renderedVersions).include(
-      `${expectedVersionsKey}: v${expectedVersions[expectedVersionsKey]}`,
-    )
-  }
-})
-
-test('Preload nodeCrypto', async () => {
-  const page = await electronApp.firstWindow()
-
-  // Test hashing a random string
-  const testString = Math.random().toString(36).slice(2, 7)
-
-  await page.fill('input', testString)
-  const renderedHash = await page.inputValue('input[readonly]')
-  const expectedHash = createHash('sha256').update(testString).digest('hex')
-  expect(renderedHash).toEqual(expectedHash)
+  expect(await page.locator('text=Commonwealth').innerText()).toBeTruthy()
 })
