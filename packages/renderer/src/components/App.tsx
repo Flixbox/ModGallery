@@ -72,6 +72,8 @@ const App = () => {
             height: '100%',
             left: 0,
             top: 0,
+            pointerEvents: "none",
+            zIndex: 1
           }}
         >
           <LoadingOverlay
