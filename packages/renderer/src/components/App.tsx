@@ -3,7 +3,7 @@ import {NotificationsProvider} from '@mantine/notifications'
 import {usePrefersColorScheme} from '@anatoliygatt/use-prefers-color-scheme'
 import {useEffect, useState} from 'react'
 import {fetchModDataSteam} from '../util/api'
-import type {PopulatedMod} from '../../../../types/types'
+import type {PopulatedMod, UnpopulatedMod} from '../../../../types/types'
 import ModList from './ModList'
 import SettingsTile from './SettingsTile'
 import {pullMods, getMods} from '#preload'
@@ -13,6 +13,7 @@ let didInit = false
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()
   const [populatedMods, setPopulatedMods] = useState<PopulatedMod[]>([])
+  const [maps, setMaps] = useState<UnpopulatedMod[]>([])
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     ;(async () => {
@@ -41,6 +42,7 @@ const App = () => {
           ({} as PopulatedMod)),
       })),
     )
+    setMaps(unpopulatedModData.maps)
     setLoading(false)
   }
 
@@ -75,6 +77,11 @@ const App = () => {
             <SettingsTile />
             <ModList
               mods={populatedMods}
+              refreshMods={refreshMods}
+            />
+            <ModList
+              mods={maps as PopulatedMod[]}
+              type="maps"
               refreshMods={refreshMods}
             />
           </SimpleGrid>

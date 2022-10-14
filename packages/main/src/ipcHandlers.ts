@@ -172,9 +172,11 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
 
   ipcMain.handle('map:install', (e, {folderName}: MapInstallOperation) => {
     const currentSettings = settings.getSync()
-    const targetPath = `${getMapFolder(currentSettings.modFolder as string)}`
-    if (!existsSync(targetPath)) throw new Error("Maps folder doesn't exist!")
-    copySync(path.join('./mods/maps', folderName), targetPath, {overwrite: true})
+    const targetFolder = `${getMapFolder(currentSettings.modFolder as string)}`
+    if (!existsSync(targetFolder)) throw new Error("Maps folder doesn't exist!")
+    copySync(path.join('./mods/maps', folderName), path.join(targetFolder, folderName), {
+      overwrite: true,
+    })
   })
 
   ipcMain.handle('map:delete', (e, {installedPath}: MapDeleteOperation) => {

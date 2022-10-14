@@ -26,6 +26,7 @@ export interface PopulatedMod extends UnpopulatedMod {
 
 export interface ModData {
   mods: UnpopulatedMod[]
+  maps: UnpopulatedMod[]
 }
 
 export interface Settings {

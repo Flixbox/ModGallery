@@ -1,4 +1,4 @@
-import {installMod, deleteMod} from '#preload'
+import {installMod, deleteMod, installMap, deleteMap} from '#preload'
 import {faSteam} from '@fortawesome/free-brands-svg-icons'
 import {faDownload, faFileCircleCheck, faQuestionCircle} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -20,14 +20,18 @@ import type {PopulatedMod} from '../../../../types/types'
 interface ModTileProps {
   mod: PopulatedMod
   refreshMods: () => void
+  type: 'mods' | 'maps'
 }
 
-const ModTile = ({mod, refreshMods}: ModTileProps) => {
+const ModTile = ({mod, refreshMods, type}: ModTileProps) => {
   const [loading, setLoading] = useState(false)
+  const install = type === 'mods' ? installMod : installMap
+  const uninstall = type === 'mods' ? deleteMod : deleteMap
+  const _delete = type === 'mods' ? deleteMod : deleteMap
   const handleInstallClick = async () => {
     setLoading(true)
     try {
-      await installMod({modFilesPath: mod.localPath, folderName: mod.folderName})
+      await install({modFilesPath: mod.localPath, folderName: mod.folderName})
       await refreshMods()
     } catch (e) {
       console.error(e)
@@ -38,7 +42,7 @@ const ModTile = ({mod, refreshMods}: ModTileProps) => {
   const handleUninstallClick = async () => {
     setLoading(true)
     try {
-      await deleteMod({installedPath: mod.installedPath as string})
+      await uninstall({installedPath: mod.installedPath as string})
       await refreshMods()
     } catch (e) {
       console.error(e)
@@ -49,7 +53,7 @@ const ModTile = ({mod, refreshMods}: ModTileProps) => {
   const handleDeleteClick = async () => {
     setLoading(true)
     try {
-      await deleteMod({installedPath: mod.installedPath as string})
+      await _delete({installedPath: mod.installedPath as string})
       await refreshMods()
     } catch (e) {
       console.error(e)
