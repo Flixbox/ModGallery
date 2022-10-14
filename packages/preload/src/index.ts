@@ -12,4 +12,6 @@ export {
   getMods,
   installMod,
   deleteMod,
+  installMap,
+  deleteMap,
 } from './nodeOperations'

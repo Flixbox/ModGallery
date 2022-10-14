@@ -47,3 +47,11 @@ export interface ModInstallOperation {
 export interface ModDeleteOperation {
   installedPath: string
 }
+
+export interface MapInstallOperation {
+  folderName: string
+}
+
+export interface MapDeleteOperation {
+  installedPath: string
+}

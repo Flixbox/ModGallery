@@ -4,6 +4,8 @@ import type {
   SettingsOperation,
   ModData,
   ModInstallOperation,
+  MapInstallOperation,
+  MapDeleteOperation,
 } from '../../../types/types'
 
 export const pickModFolder = (defaultPath?: string) =>
@@ -17,3 +19,7 @@ export const installMod = async ({modFilesPath, folderName}: ModInstallOperation
   await ipcRenderer.invoke('mod:install', {modFilesPath, folderName})
 export const deleteMod = async ({installedPath}: ModDeleteOperation) =>
   await ipcRenderer.invoke('mod:delete', {installedPath})
+export const installMap = async ({folderName}: MapInstallOperation) =>
+  await ipcRenderer.invoke('map:install', {folderName})
+export const deleteMap = async ({installedPath}: MapDeleteOperation) =>
+  await ipcRenderer.invoke('map:delete', {installedPath})
