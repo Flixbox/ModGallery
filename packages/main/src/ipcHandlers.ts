@@ -2,7 +2,7 @@ import type {BrowserWindow} from 'electron'
 import {dialog, ipcMain} from 'electron'
 import {homedir} from 'os'
 import settings from 'electron-settings'
-import {
+import fs, {
   copySync,
   emptyDirSync,
   existsSync,
@@ -21,6 +21,9 @@ import type {
 } from '../../../types/types'
 import util from 'util'
 const exec = util.promisify(require('child_process').exec)
+import path from 'path'
+import git from 'isomorphic-git'
+import http from 'isomorphic-git/http/node'
 
 const execute = async (cmd: string, ignoreFailure = true) => {
   try {
@@ -105,8 +108,10 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
 
   ipcMain.handle('mods:pull', async () => {
     console.log('Pulling mods!')
-    await execute('git clone https://github.com/Flixbox/ModGallery-Mods.git ./mods')
-    await execute('git --work-tree=./mods --git-dir=./mods/.git pull', false)
+    const dir = path.join(process.cwd(), 'mods')
+    await git.clone({fs, http, dir, url: 'https://github.com/Flixbox/ModGallery-Mods.git'})
+    await git.pull({fs, http, dir, author: {name: 'ModGallery', email: 'test@example.com'}})
+
     console.log('Done pulling!')
   })
 
