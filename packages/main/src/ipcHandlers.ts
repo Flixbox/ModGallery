@@ -19,22 +19,9 @@ import type {
   SettingsOperation,
   UnpopulatedMod,
 } from '../../../types/types'
-import util from 'util'
-const exec = util.promisify(require('child_process').exec)
 import path from 'path'
 import git from 'isomorphic-git'
 import http from 'isomorphic-git/http/node'
-
-const execute = async (cmd: string, ignoreFailure = true) => {
-  try {
-    const {stdout, stderr, error} = await exec(cmd)
-    error && console.error(error)
-    stderr && console.error(stderr)
-    stdout && console.log(stdout)
-  } catch (e: unknown) {
-    if (!ignoreFailure) throw e
-  }
-}
 
 const getDefaultRootPath = () => {
   let defaultPath = homedir()
