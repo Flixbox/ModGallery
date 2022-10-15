@@ -22,7 +22,7 @@ const config = {
     version: process.env.VITE_APP_VERSION,
   },
   appx: {
-    publisher: 'Felix Tietjen',
+    publisherDisplayName: 'Felix Tietjen',
   },
 }
 
