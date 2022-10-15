@@ -3,8 +3,6 @@ import {join} from 'path'
 import {URL} from 'url'
 import ipcHandlers from './ipcHandlers'
 import path from 'path'
-const {version} = require('../../../package.json')
-console.log('App Version: ' + version)
 
 async function createWindow() {
   console.log(path.join(__dirname, '../../../buildResources/icon.png'))
