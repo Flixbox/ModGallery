@@ -2,8 +2,10 @@ import {app, BrowserWindow} from 'electron'
 import {join} from 'path'
 import {URL} from 'url'
 import ipcHandlers from './ipcHandlers'
+import path from 'path'
 
 async function createWindow() {
+  console.log(path.join(__dirname, '../../../buildResources/icon.png'))
   const browserWindow = new BrowserWindow({
     show: false, // Use the 'ready-to-show' event to show the instantiated BrowserWindow.
     webPreferences: {
@@ -13,6 +15,7 @@ async function createWindow() {
       webviewTag: false, // The webview tag is not recommended. Consider alternatives like an iframe or Electron's BrowserView. @see https://www.electronjs.org/docs/latest/api/webview-tag#warning
       preload: join(app.getAppPath(), 'packages/preload/dist/index.cjs'),
     },
+    icon: path.join(__dirname, '../../../buildResources/icon.png'),
   })
 
   /**
