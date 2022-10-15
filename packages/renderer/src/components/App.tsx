@@ -11,6 +11,7 @@ import {Info} from 'react-feather'
 
 let didInit = false
 
+//
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()
   const [populatedMods, setPopulatedMods] = useState<PopulatedMod[]>([])
