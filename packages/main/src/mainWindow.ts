@@ -4,6 +4,8 @@ import {URL} from 'url'
 import ipcHandlers from './ipcHandlers'
 import path from 'path'
 
+console.log('App Version: ' + process.env.npm_package_version)
+
 async function createWindow() {
   console.log(path.join(__dirname, '../../../buildResources/icon.png'))
   const browserWindow = new BrowserWindow({
