@@ -81,8 +81,8 @@ const App = () => {
               title="Activating mods"
               color="blue"
             >
-              In order to use your mods, you'll need to activate them in the settings menu in Hero's
-              Hour.
+              In order to use your mods, you'll need to activate them individually in the settings
+              menu in Hero's Hour.
             </Alert>
             <ModList
               mods={populatedMods}
