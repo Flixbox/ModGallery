@@ -2,7 +2,7 @@
   "name": "modgallery",
   "description": "Community Mod gallery for Hero's Hour",
   "private": false,
-  "version": "0.0",
+  "version": "1.0.0",
   "main": "packages/main/dist/index.cjs",
   "author": "Flixbox",
   "scripts": {
