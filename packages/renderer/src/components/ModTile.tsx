@@ -23,6 +23,7 @@ interface ModTileProps {
   type: 'mods' | 'maps'
 }
 
+//
 const ModTile = ({mod, refreshMods, type}: ModTileProps) => {
   const [loading, setLoading] = useState(false)
   const install = type === 'mods' ? installMod : installMap
