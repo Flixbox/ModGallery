@@ -65,6 +65,7 @@ if (import.meta.env.PROD) {
     .then(({autoUpdater}) => {
       log.transports.file.level = 'debug'
       autoUpdater.logger = log
+      autoUpdater.allowPrerelease = true
       autoUpdater.checkForUpdatesAndNotify()
     })
     .catch(e => console.error('Failed check updates:', e))
