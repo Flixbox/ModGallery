@@ -1,8 +1,10 @@
+const moment = require('moment')
+
 if (process.env.VITE_APP_VERSION === undefined) {
-  const now = new Date()
-  process.env.VITE_APP_VERSION = `${now.getUTCFullYear() - 2000}.${
-    now.getUTCMonth() + 1
-  }${now.getUTCDate()}.${now.getUTCHours() * 60 + now.getUTCMinutes()}`
+  const now = moment.utc()
+  process.env.VITE_APP_VERSION = `${now.year() - 2000}.${now.dayOfYear()}.${
+    now.hours() * 60 + now.minutes()
+  }`
 }
 
 /**
