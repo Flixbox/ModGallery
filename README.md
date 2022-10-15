@@ -18,12 +18,11 @@ Under the hood is [Vite] — A next-generation blazing fast bundler, and [electr
 
 ## Release
 
-- Change the version in `package.json`
-- Commit locally with the message `v<version>`, for example `v1.1`
-- Tag your commit with the same message
-- Push
+- Push to `main`
+- Wait for the CI
 - This will create a draft release
 - Keep all the files when editing the release
+- Finalize the release
 
 **Note**: This template uses npm v7 feature — [**Installing Peer Dependencies Automatically**](https://github.com/npm/rfcs/blob/latest/implemented/0025-install-peer-deps.md). You might have to install with force.
 
