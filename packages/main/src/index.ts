@@ -1,6 +1,7 @@
 import {app} from 'electron'
 import './security-restrictions'
 import {restoreOrCreateWindow} from '/@/mainWindow'
+import log from 'electron-log'
 
 /**
  * Prevent electron from running multiple instances.
@@ -61,6 +62,10 @@ if (import.meta.env.PROD) {
   app
     .whenReady()
     .then(() => import('electron-updater'))
-    .then(({autoUpdater}) => autoUpdater.checkForUpdatesAndNotify())
+    .then(({autoUpdater}) => {
+      log.transports.file.level = 'debug'
+      autoUpdater.logger = log
+      autoUpdater.checkForUpdatesAndNotify()
+    })
     .catch(e => console.error('Failed check updates:', e))
 }
