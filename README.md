@@ -1,10 +1,14 @@
-# Vite Electron Builder Boilerplate
+# Community Mod & Map downloader for Hero's Hour
 
 [![Required Node.JS >= v16.13](https://img.shields.io/static/v1?label=node&message=%3E=16.13&logo=node.js&color)](https://nodejs.org/about/releases/) [![Required npm >= v8.1](https://img.shields.io/static/v1?label=npm&message=%3E=8.1&logo=npm&color)](https://github.com/npm/cli/releases)
 
 > Vite+Electron = 🔥
 
 Under the hood is [Vite] — A next-generation blazing fast bundler, and [electron-builder] for packaging.
+
+## Download
+
+[Download installer from Releases](https://github.com/Flixbox/ModGallery/releases)
 
 ## Development
 
@@ -14,12 +18,11 @@ Under the hood is [Vite] — A next-generation blazing fast bundler, and [electr
 
 ## Release
 
-- Change the version in `package.json`
-- Commit locally with the message `v<version>`, for example `v1.1`
-- Tag your commit with the same message
-- Push
+- Push to `main`
+- Wait for the CI
 - This will create a draft release
 - Keep all the files when editing the release
+- Finalize the release
 
 **Note**: This template uses npm v7 feature — [**Installing Peer Dependencies Automatically**](https://github.com/npm/rfcs/blob/latest/implemented/0025-install-peer-deps.md). You might have to install with force.
 
