@@ -1,4 +1,4 @@
-import {MantineProvider, Container, Box, SimpleGrid, LoadingOverlay} from '@mantine/core'
+import {MantineProvider, Container, Box, SimpleGrid, LoadingOverlay, Alert} from '@mantine/core'
 import {NotificationsProvider} from '@mantine/notifications'
 import {usePrefersColorScheme} from '@anatoliygatt/use-prefers-color-scheme'
 import {useEffect, useState} from 'react'
@@ -7,6 +7,7 @@ import type {PopulatedMod, UnpopulatedMod} from '../../../../types/types'
 import ModList from './ModList'
 import SettingsTile from './SettingsTile'
 import {pullMods, getMods} from '#preload'
+import {Info} from 'react-feather'
 
 let didInit = false
 
@@ -75,6 +76,14 @@ const App = () => {
         <Container>
           <SimpleGrid cols={1}>
             <SettingsTile />
+            <Alert
+              icon={<Info />}
+              title="Activating mods"
+              color="blue"
+            >
+              In order to use your mods, you'll need to activate them in the settings menu in Hero's
+              Hour.
+            </Alert>
             <ModList
               mods={populatedMods}
               refreshMods={refreshMods}
