@@ -22,6 +22,10 @@ const config = {
     version: process.env.VITE_APP_VERSION,
   },
   appx: {
+    identityName: '41782FelixTietjen.ModGallery',
+    applicationId: 'FelixTietjen.ModGallery',
+    displayName: 'ModGallery',
+    publisher: 'CN=3D47DBD7-BEDA-48AC-A2AD-6B86B6BF7836',
     publisherDisplayName: 'Felix Tietjen',
   },
 }
