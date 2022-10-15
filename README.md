@@ -24,6 +24,9 @@ Under the hood is [Vite] — A next-generation blazing fast bundler, and [electr
 - Keep all the files when editing the release
 - Finalize the release
 
+------------------------
+From template:
+
 **Note**: This template uses npm v7 feature — [**Installing Peer Dependencies Automatically**](https://github.com/npm/rfcs/blob/latest/implemented/0025-install-peer-deps.md). You might have to install with force.
 
 **Note**: Find more useful forks [here](https://github.com/cawa-93/vite-electron-builder/discussions/categories/forks).
