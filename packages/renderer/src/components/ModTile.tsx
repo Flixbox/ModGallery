@@ -1,6 +1,11 @@
 import {installMod, deleteMod, installMap, deleteMap} from '#preload'
 import {faSteam} from '@fortawesome/free-brands-svg-icons'
-import {faDownload, faFileCircleCheck, faQuestionCircle} from '@fortawesome/free-solid-svg-icons'
+import {
+  faCloud,
+  faDownload,
+  faFileCircleCheck,
+  faQuestionCircle,
+} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
   Badge,
@@ -101,14 +106,27 @@ const ModTile = ({mod, refreshMods, type}: ModTileProps) => {
               sx={{width: '100%'}}
             >
               <Group>
-                {mod.versionText && (
-                  <Badge
-                    color="yellow"
-                    variant="light"
-                    sx={{width: 'fit-content'}}
-                  >
-                    {mod.versionText}
-                  </Badge>
+                {mod.installedPathVersionText && (
+                  <Tooltip label="Installed">
+                    <Badge
+                      color="yellow"
+                      variant="light"
+                      sx={{width: 'fit-content'}}
+                    >
+                      <FontAwesomeIcon icon={faDownload} /> {mod.installedPathVersionText}
+                    </Badge>
+                  </Tooltip>
+                )}
+                {mod.localPathVersionText && (
+                  <Tooltip label="Available to download">
+                    <Badge
+                      color="blue"
+                      variant="light"
+                      sx={{width: 'fit-content'}}
+                    >
+                      <FontAwesomeIcon icon={faCloud} /> {mod.localPathVersionText}
+                    </Badge>
+                  </Tooltip>
                 )}
                 <Text weight={500}>{mod.title}</Text>
 
