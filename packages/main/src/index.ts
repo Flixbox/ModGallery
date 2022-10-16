@@ -58,7 +58,7 @@ app
 /**
  * Check for new version of the application - production mode only.
  */
-if (import.meta.env.PROD) {
+if (import.meta.env.PROD && !process.windowsStore) {
   app
     .whenReady()
     .then(() => import('electron-updater'))
