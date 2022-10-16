@@ -3,6 +3,7 @@
 [![](https://img.shields.io/static/v1?label=Discuss&message=on%20Discord&color=7289DA&style=flat&logo=discord)](https://discord.gg/vnZMK2kyY5)
 
 [![Required Node.JS >= v16.13](https://img.shields.io/static/v1?label=node&message=%3E=16.13&logo=node.js&color)](https://nodejs.org/about/releases/) [![Required npm >= v8.1](https://img.shields.io/static/v1?label=npm&message=%3E=8.1&logo=npm&color)](https://github.com/npm/cli/releases)
+[![](https://img.shields.io/static/v1?label=&message=Electron%2021.0.1&color=fff&style=flat&logo=electron)](https://www.electronjs.org)
 
 This program allows you to easily download and install mods and maps for the game Hero's Hour. No Steam required.
 

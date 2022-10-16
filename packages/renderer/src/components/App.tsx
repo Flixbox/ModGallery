@@ -11,7 +11,7 @@ import {Info} from 'react-feather'
 
 let didInit = false
 
-//
+// TODO Check if mods have updates and add an update button
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()
   const [populatedMods, setPopulatedMods] = useState<PopulatedMod[]>([])
