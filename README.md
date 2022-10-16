@@ -11,7 +11,7 @@ This program allows you to easily download and install mods and maps for the gam
 
 [Download installer from Releases](https://github.com/Flixbox/ModGallery/releases)
 
-Screeenshot:
+Screenshot:
 
 ![image](https://user-images.githubusercontent.com/14835021/196058132-b38ce94e-c339-4422-9233-0f7fa6ba7810.png)
 
