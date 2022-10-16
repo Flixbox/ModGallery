@@ -50,21 +50,24 @@ const getDefaultMapPath = () => {
 
 const readModsFolder = (folderPath: string, pathKey = 'localPath') => {
   console.log('Reading files')
-  const availableModContents = readdirSync(folderPath, {withFileTypes: true})
-  const availableModFolders = availableModContents.filter(dirent => dirent.isDirectory())
-  const availableMods = availableModFolders.map(folder => {
-    const localPath = `${folderPath}/${folder.name}`
-    const baseData = {[pathKey]: localPath, folderName: folder.name, title: folder.name}
+  const modContents = readdirSync(folderPath, {withFileTypes: true})
+  const modFolders = modContents.filter(dirent => dirent.isDirectory())
+  const mods = modFolders.map(folder => {
+    const modFolder = `${folderPath}/${folder.name}`
+    const baseData = {[pathKey]: modFolder, folderName: folder.name, title: folder.name}
     try {
+      const modJson = JSON.parse(readFileSync(`${modFolder}/mod.json`, {flag: 'r'}).toString())
       return {
         ...baseData,
-        ...JSON.parse(readFileSync(`${localPath}/mod.json`, {flag: 'r'}).toString()),
+        ...modJson,
+        [`${pathKey}Version`]: modJson.version,
+        [`${pathKey}VersionText`]: modJson.versionText,
       } as UnpopulatedMod
     } catch (e) {
       return baseData as unknown as UnpopulatedMod
     }
   })
-  return availableMods
+  return mods
 }
 
 const readMaps = (folderPath: string, pathKey = 'localPath') => {

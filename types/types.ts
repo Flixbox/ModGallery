@@ -5,6 +5,10 @@ export interface UnpopulatedMod {
   folderName: string
   version: number
   versionText: string
+  installedPathVersion?: string
+  installedPathVersionText?: string
+  localPathVersion?: string
+  localPathVersionText?: string
 }
 
 export interface PopulatedMod extends UnpopulatedMod {

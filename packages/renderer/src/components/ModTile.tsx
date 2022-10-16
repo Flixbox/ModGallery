@@ -23,12 +23,14 @@ interface ModTileProps {
   type: 'mods' | 'maps'
 }
 
-//
 const ModTile = ({mod, refreshMods, type}: ModTileProps) => {
   const [loading, setLoading] = useState(false)
   const install = type === 'mods' ? installMod : installMap
   const uninstall = type === 'mods' ? deleteMod : deleteMap
   const _delete = type === 'mods' ? deleteMod : deleteMap
+  const localVersion = mod.localPathVersion || 0
+  const installedVersion = mod.installedPathVersion || 0
+
   const handleInstallClick = async () => {
     setLoading(true)
     try {
@@ -62,6 +64,19 @@ const ModTile = ({mod, refreshMods, type}: ModTileProps) => {
 
     setLoading(false)
   }
+  const handleUpdateClick = async () => {
+    setLoading(true)
+    try {
+      await _delete({installedPath: mod.installedPath as string})
+      await install({modFilesPath: mod.localPath, folderName: mod.folderName})
+      await refreshMods()
+    } catch (e) {
+      console.error(e)
+    }
+
+    setLoading(false)
+  }
+
   return (
     <Card
       shadow="sm"
@@ -157,6 +172,16 @@ const ModTile = ({mod, refreshMods, type}: ModTileProps) => {
                 mr="md"
               >
                 Uninstall
+              </Button>
+            )}
+            {mod.localPath && mod.installedPath && installedVersion < localVersion && (
+              <Button
+                onClick={handleUpdateClick}
+                variant="light"
+                color="orange"
+                mr="md"
+              >
+                Update to version {mod.localPathVersionText}
               </Button>
             )}
             {!mod.localPath && mod.installedPath && (
