@@ -300,7 +300,14 @@ function replaceHeader(str) {
  */
 function getChangeLog(groups) {
 
-  let changelog = '';
+  let changelog = `
+# Download ModGallery for Hero's Hour
+
+The installer is the file \`modgallery-Setup-<version>.exe\`. Just download it and run it.
+
+You might see a Windows Security popup when running the installer since the installer is unsigned.
+
+  `;
 
   for (const [typeId, group] of groups) {
     if (group.isEmpty) {

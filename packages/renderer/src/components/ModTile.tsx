@@ -115,7 +115,7 @@ const ModTile = ({mod, refreshMods, type}: ModTileProps) => {
                     <FontAwesomeIcon icon={faFileCircleCheck} />
                   </Tooltip>
                 )}
-                {!mod.version && (
+                {!mod.version && type === 'mods' && (
                   <Tooltip label="Version information missing">
                     <FontAwesomeIcon icon={faQuestionCircle} />
                   </Tooltip>
