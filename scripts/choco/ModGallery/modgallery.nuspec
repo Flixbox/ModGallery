@@ -49,7 +49,7 @@ This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Refe
     <tags>modgallery mods maps hero hour</tags>
     <summary>Community mod installer for the game Hero's Hour.</summary>
     <description>This program allows you to easily download and install mods and maps for the game Hero's Hour. No Steam required.</description>
-    <!-- <releaseNotes>__REPLACE_OR_REMOVE__MarkDown_Okay</releaseNotes> -->
+    <releaseNotes>https://github.com/Flixbox/ModGallery/releases</releaseNotes>
     <!-- =============================== -->
 
     <!-- Specifying dependencies and version ranges? https://docs.nuget.org/create/versioning#specifying-version-ranges-in-.nuspec-files -->
