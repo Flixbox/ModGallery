@@ -11,7 +11,23 @@ import {Info} from 'react-feather'
 
 let didInit = false
 
-// TODO Check if mods have updates and add an update button
+//
+/*
+  TODO Add a clickable category list that scrolls the user to the category (still a big list, but with headings)
+
+  So on the side it would look like
+```txt
+- Mods
+  - Modpacks
+  - Factions
+  - Units
+  - ...
+- Maps
+```
+
+  TODO add a portable zip file with the compiled program (portable version)
+  TODO remove default windows file bar from window
+*/
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()
   const [populatedMods, setPopulatedMods] = useState<PopulatedMod[]>([])
