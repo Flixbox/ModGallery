@@ -6,11 +6,11 @@ import fs, {
   copySync,
   emptyDirSync,
   existsSync,
-  pathExists,
   readdirSync,
   readFileSync,
   mkdirSync,
   removeSync,
+  pathExistsSync,
 } from 'fs-extra'
 import type {
   MapDeleteOperation,
@@ -26,10 +26,11 @@ import git from 'isomorphic-git'
 import http from 'isomorphic-git/http/node'
 
 const getDefaultRootPath = () => {
-  let defaultPath = homedir()
-  if (process.platform === 'win32') defaultPath = `${defaultPath}\\AppData\\Local\\Hero_s_Hour`
-  console.log(defaultPath)
-  if (!pathExists(defaultPath)) defaultPath = `${homedir()}\\Hero_s_Hour`
+  let defaultPath
+  defaultPath = `${homedir()}\\AppData\\Roaming\\itch\\apps\\heros-hour`
+  if (!pathExistsSync(defaultPath)) defaultPath = `${homedir()}\\AppData\\Local\\Hero_s_Hour`
+  if (!pathExistsSync(defaultPath)) defaultPath = `${homedir()}\\Hero_s_Hour`
+  console.log('defaultPath', defaultPath)
   return defaultPath
 }
 
