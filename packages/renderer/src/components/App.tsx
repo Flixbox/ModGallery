@@ -11,7 +11,6 @@ import {Info} from 'react-feather'
 
 let didInit = false
 
-//
 /*
   TODO Add a clickable category list that scrolls the user to the category (still a big list, but with headings)
 
@@ -24,9 +23,6 @@ let didInit = false
   - ...
 - Maps
 ```
-
-  TODO add a portable zip file with the compiled program (portable version)
-  TODO remove default windows file bar from window
 */
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()

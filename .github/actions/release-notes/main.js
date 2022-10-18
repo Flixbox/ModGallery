@@ -301,11 +301,32 @@ function replaceHeader(str) {
 function getChangeLog(groups) {
 
   let changelog = `
-# Download ModGallery for Hero's Hour
 
-The installer is the file \`modgallery-Setup-<version>.exe\`. Just download it and run it.
+  # Download ModGallery for Hero's Hour
 
-You might see a Windows Security popup when running the installer since the installer is unsigned.
+  ## Easy installation
+
+  The installer is the file \`modgallery-Setup-<version>.exe\`. Just download it and run it.
+
+  You might see a Windows Security popup when running the installer since the installer is unsigned.
+
+  If you install the application using the installer, it will be automatically kept up to date.
+
+  There is no need to download and run any other files.
+
+  ---
+
+  ## File details
+
+  \`latest.yml\` contains **metadata for the application's auto updater**.
+
+  \`modgallery-<version>-win.zip\` is the **portable version**. You can extract it anywhere and use it from that folder by running \`modgallery.exe\`.
+
+  \`modgallery-<version>.appx\` is the **unsigned Windows Store version**. It can be published to the Windows Store by the author. It can't be installed it its unsigned state.
+
+  \`modgallery-Setup-<version>.exe\` is the **Windows NSIS installer**. Clicking it causes a one-click installation process. It normally doesn't need administrator permissions.
+
+  \`modgallery-Setup-<version>.exe.blockmap\` contains **metadata for the application's auto updater**.
 
   `;
 
