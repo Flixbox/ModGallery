@@ -18,6 +18,8 @@ async function createWindow() {
     icon: path.join(__dirname, '../../../buildResources/icon.png'),
   })
 
+  browserWindow.setMenuBarVisibility(false)
+
   /**
    * If the 'show' property of the BrowserWindow's constructor is omitted from the initialization options,
    * it then defaults to 'true'. This can cause flickering as the window loads the html content,
