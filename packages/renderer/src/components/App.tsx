@@ -59,7 +59,6 @@ const App = () => {
       console.log('unpopulatedModData', unpopulatedModData)
 
       const steamModData = await fetchModDataSteam(unpopulatedModData.mods)
-      // setCars(cars)
       console.log('steamModData', steamModData)
       setPopulatedMods(
         unpopulatedModData.mods.map(unpopulatedMod => ({
