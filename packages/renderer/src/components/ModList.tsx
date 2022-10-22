@@ -15,7 +15,7 @@ const ModList = ({mods, refreshMods, type = 'mods'}: ModListProps) => {
           mod={mod}
           refreshMods={refreshMods}
           type={type}
-          key={mod.title}
+          key={mod.folderName}
         />
       ))}
     </>

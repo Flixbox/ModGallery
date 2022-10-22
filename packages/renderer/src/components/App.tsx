@@ -33,6 +33,12 @@ let didInit = false
   - ...
 - Maps
 ```
+
+  TODO Deploy mod on Steam Workshop
+  TODO Deploy mod on Windows store
+  TODO Deploy mod on choco
+  TODO Link mod install links in readme
+  TODO Share mod links (github) on Discord
 */
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()
