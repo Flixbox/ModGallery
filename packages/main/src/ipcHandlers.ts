@@ -1,4 +1,5 @@
 import type {BrowserWindow} from 'electron'
+import {app} from 'electron'
 import {dialog, ipcMain} from 'electron'
 import {homedir} from 'os'
 import settings from 'electron-settings'
@@ -24,6 +25,8 @@ import type {
 import path from 'path'
 import git from 'isomorphic-git'
 import http from 'isomorphic-git/http/node'
+
+const localModsFolder = path.join(app.getPath('userData'), 'mods')
 
 const getDefaultRootPath = () => {
   let defaultPath
@@ -136,7 +139,8 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
 
   ipcMain.handle('mods:pull', async () => {
     console.log('Pulling mods!')
-    const dir = path.join(process.cwd(), 'mods')
+    const dir = localModsFolder
+    console.log(`cloning into ${dir}`)
     await git.clone({fs, http, dir, url: 'https://github.com/Flixbox/ModGallery-Mods.git'})
     await git.pull({fs, http, dir, author: {name: 'ModGallery', email: 'test@example.com'}})
 
@@ -145,9 +149,9 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
 
   ipcMain.handle('mods:get', () => {
     const currentSettings = settings.getSync()
-    const availableMods = readModsFolder('./mods/modFolders')
+    const availableMods = readModsFolder(path.join(localModsFolder, 'modFolders'))
     const installedMods = readModsFolder(currentSettings.modFolder as string, 'installedPath')
-    const availableMaps = readMaps('./mods/maps')
+    const availableMaps = readMaps(path.join(localModsFolder, 'maps'))
     const installedMaps = readMaps(
       getMapFolder(currentSettings.modFolder as string),
       'installedPath',
@@ -178,7 +182,7 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
     const currentSettings = settings.getSync()
     const targetFolder = `${getMapFolder(currentSettings.modFolder as string)}`
     if (!existsSync(targetFolder)) throw new Error("Maps folder doesn't exist!")
-    copySync(path.join('./mods/maps', folderName), path.join(targetFolder, folderName), {
+    copySync(path.join(localModsFolder, 'maps', folderName), path.join(targetFolder, folderName), {
       overwrite: true,
     })
   })
