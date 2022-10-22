@@ -129,6 +129,7 @@ const ModTile = ({mod, refreshMods, type}: ModTileProps) => {
                   </Tooltip>
                 )}
                 <Text weight={500}>{mod.title}</Text>
+                {mod.author && <Text weight={300}>by {mod.author}</Text>}
 
                 <div style={{flexGrow: 1}} />
               </Group>

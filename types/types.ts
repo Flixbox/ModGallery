@@ -1,4 +1,5 @@
 export interface UnpopulatedMod {
+  author: string
   publishedfileid: string
   localPath: string
   installedPath?: string
