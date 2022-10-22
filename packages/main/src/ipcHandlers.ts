@@ -12,6 +12,7 @@ import fs, {
   mkdirSync,
   removeSync,
   pathExistsSync,
+  createReadStream,
 } from 'fs-extra'
 import type {
   MapDeleteOperation,
@@ -25,6 +26,7 @@ import type {
 import path from 'path'
 import git from 'isomorphic-git'
 import http from 'isomorphic-git/http/node'
+import readline from 'readline'
 
 const localModsFolder = path.join(app.getPath('userData'), 'mods')
 
@@ -74,12 +76,37 @@ const readModsFolder = (folderPath: string, pathKey = 'localPath') => {
   return mods
 }
 
-const readMaps = (folderPath: string, pathKey = 'localPath') => {
+const readMaps = async (folderPath: string, pathKey = 'localPath') => {
   const availableMapContents = readdirSync(folderPath, {withFileTypes: true})
-  const availableMaps = availableMapContents.map(mapFile => {
-    const localPath = path.join(folderPath, mapFile.name)
-    return {[pathKey]: localPath, folderName: mapFile.name, title: mapFile.name}
-  })
+  const availableMaps = await Promise.all(
+    availableMapContents.map(async mapFile => {
+      const localPath = path.join(folderPath, mapFile.name)
+      let title = mapFile.name
+      let author
+      let titleFound = false
+      let authorFound = false
+      const lineReader = readline.createInterface({
+        input: createReadStream(localPath),
+      })
+
+      for await (const line of lineReader) {
+        if (!isNaN(+line) || !line) continue
+        if (!titleFound) {
+          title = line
+          titleFound = true
+          continue
+        }
+        if (!authorFound) {
+          author = line
+          authorFound = true
+        }
+        lineReader.close()
+      }
+
+      return {[pathKey]: localPath, folderName: mapFile.name, title, author}
+    }),
+  )
+  console.log('returning end')
   return availableMaps as unknown as UnpopulatedMod[]
 }
 
@@ -147,12 +174,12 @@ const ipcHandlers = (browserWindow: BrowserWindow) => {
     console.log('Done pulling!')
   })
 
-  ipcMain.handle('mods:get', () => {
+  ipcMain.handle('mods:get', async () => {
     const currentSettings = settings.getSync()
     const availableMods = readModsFolder(path.join(localModsFolder, 'modFolders'))
     const installedMods = readModsFolder(currentSettings.modFolder as string, 'installedPath')
-    const availableMaps = readMaps(path.join(localModsFolder, 'maps'))
-    const installedMaps = readMaps(
+    const availableMaps = await readMaps(path.join(localModsFolder, 'maps'))
+    const installedMaps = await readMaps(
       getMapFolder(currentSettings.modFolder as string),
       'installedPath',
     )
