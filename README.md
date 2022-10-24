@@ -8,6 +8,8 @@ This program allows you to easily download and install mods and maps for the gam
 
 ## 💾 Download
 
+[<img src="https://i.imgur.com/Vp5cDvU.png" width="300">](https://www.microsoft.com/store/productId/9NSLRVZF3C89)
+
 [Download installer from Releases](https://github.com/Flixbox/ModGallery/releases)
 
 Screenshot:
