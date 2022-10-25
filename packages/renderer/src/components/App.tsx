@@ -35,10 +35,9 @@ let didInit = false
 ```
 
   TODO Deploy mod on Steam Workshop
-  TODO Deploy mod on Windows store
   TODO Deploy mod on choco
   TODO Link mod install links in readme
-  TODO Share mod links (github) on Discord
+  TODO Read map algorithm: line 2 has the key => key * 3 + 3 for the author
 */
 const App = () => {
   const preferredColorScheme = usePrefersColorScheme()

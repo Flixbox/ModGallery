@@ -57,6 +57,7 @@
     "@mantine/hooks": "^5.4.0",
     "@mantine/modals": "^5.4.0",
     "@mantine/notifications": "^5.4.0",
+    "@sentry/electron": "^4.1.0",
     "electron-log": "^4.4.8",
     "electron-settings": "^4.0.2",
     "electron-updater": "5.2.1",
